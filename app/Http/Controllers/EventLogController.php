@@ -74,6 +74,7 @@ class EventLogController extends Controller
         $log = $event->logs()->updateOrCreate([
             'student_id' => $request->student_id,
             'status' => $event->status,
+        ], [
             'logged_by_user_id' => Auth::id(),
         ]);
 
