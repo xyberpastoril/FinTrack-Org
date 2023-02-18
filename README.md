@@ -1,8 +1,6 @@
 # [Playground] - QR Attendance Management System
 
-This is my own implementation of the QR Attendance System using Laravel 10. Inspired from `vsuqrams` by R. R.
-
-P.S. This is a fast-paced implementation, not all features are implemented.
+This is a 1-day speed-run implementation of the QR Attendance Management System using Laravel 10. It consists of critical features that allow admins to manage users that checks for attendance, events, degree programs (import only), and students (import only).
 
 ## Requirements
 - PHP Version = 8.1
