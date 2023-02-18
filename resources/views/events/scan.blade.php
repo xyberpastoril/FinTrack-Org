@@ -142,7 +142,18 @@
             $("#latest_scan_name").html("<span class='text-muted'>Processing Data</span>");
             // $("#latestSection").html("<span class-'text-muted'>Give us a second.</span>");
 
-            var jqxhr = $.post("/ajax/events/1/logs/store", {
+            const url = window.location.href;
+
+            // Use a regular expression to match the number between the last two slashes
+            const match = url.match(/\/(\d+)\/[^/]*$/);
+
+            // Extract the number from the first capturing group of the match
+            const eventId = match && match[1];
+
+            console.log(eventId); // Output: "2"
+
+
+            var jqxhr = $.post(`/ajax/events/${eventId}/logs/store`, {
                 _token: "{{ csrf_token() }}",
                 id_number: content
             });
