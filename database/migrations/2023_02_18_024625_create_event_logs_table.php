@@ -15,7 +15,10 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('student_id');
             $table->unsignedBigInteger('event_id');
-            $table->boolean('status'); // 0=timein, 1=timeout
+            $table->enum('status', [
+                'timein',
+                'timeout',
+            ]);
             $table->unsignedBigInteger('logged_by_user_id');
             $table->timestamps();
 
