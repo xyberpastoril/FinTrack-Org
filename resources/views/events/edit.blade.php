@@ -13,11 +13,11 @@
                         @method('PUT')
                         <div class="mb-3">
                             <label for="name" class="form-label">Name</label>
-                            <input type="text" class="form-control" id="name" name="name" required value={{ $event->name }}>
+                            <input type="text" class="form-control" id="name" name="name" required value="{{ $event->name }}">
                         </div>
                         <div class="mb-3">
                             <label for="date" class="form-label">Date</label>
-                            <input type="date" class="form-control" id="date" name="date" required value={{ $event->date }}>
+                            <input type="date" class="form-control" id="date" name="date" required value="{{ $event->date }}">
                         </div>
                         <div class="mb-3">
                             <label for="status" class="form-label">Status</label>
