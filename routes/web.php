@@ -26,6 +26,16 @@ Route::group([
 ], function() {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+    // Account
+    Route::group([
+        'prefix' => 'account',
+        'as' => 'account.',
+    ], function(){
+        Route::get('/', [App\Http\Controllers\AccountController::class, 'index'])->name('index');
+
+        Route::post('/update/password', [App\Http\Controllers\AccountController::class, 'updatePassword'])->name('updatePassword');
+    });
+
     // Degree Programs
     Route::group([
         'prefix' => 'degree-programs',
