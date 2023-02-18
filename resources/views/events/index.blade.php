@@ -43,6 +43,7 @@
                                         class="btn btn-sm btn-primary @if($event->status == 'closed') disabled @endif">Scan</a>
                                     {{-- <a href="{{ route('events.show', $event->id) }}"
                                             class="btn btn-sm btn-primary">Show</a> --}}
+                                    @if(Auth::user()->is_admin)
                                     <a href="{{ route('events.edit', $event->id) }}"
                                         class="btn btn-sm btn-secondary">Edit</a>
                                     <form action="{{ route('events.destroy', $event->id) }}" method="post"
@@ -51,6 +52,7 @@
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-danger" disabled=true>Delete</button>
                                     </form>
+                                    @endif
                                 </td>
                             </tr>
                             @endforeach

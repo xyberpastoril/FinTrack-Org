@@ -30,6 +30,7 @@ Route::group([
     Route::group([
         'prefix' => 'degree-programs',
         'as' => 'degreePrograms.',
+        'middleware' => 'admin',
     ], function(){
         Route::get('/', [App\Http\Controllers\DegreeProgramController::class, 'index'])->name('index');
         Route::post('/import', [App\Http\Controllers\DegreeProgramController::class, 'import'])->name('import');
@@ -39,6 +40,7 @@ Route::group([
     Route::group([
         'prefix' => 'students',
         'as' => 'students.',
+        'middleware' => 'admin',
     ], function(){
         Route::get('/', [App\Http\Controllers\StudentController::class, 'index'])->name('index');
         Route::post('/import', [App\Http\Controllers\StudentController::class, 'import'])->name('import');
@@ -50,13 +52,13 @@ Route::group([
         'as' => 'events.',
     ], function(){
         Route::get('/', [App\Http\Controllers\EventController::class, 'index'])->name('index');
-        Route::get('/create', [App\Http\Controllers\EventController::class, 'create'])->name('create');
-        Route::post('/', [App\Http\Controllers\EventController::class, 'store'])->name('store');
-        Route::get('/{event}', [App\Http\Controllers\EventController::class, 'show'])->name('show');
+        Route::get('/create', [App\Http\Controllers\EventController::class, 'create'])->name('create')->middleware('admin');
+        Route::post('/', [App\Http\Controllers\EventController::class, 'store'])->name('store')->middleware('admin');
+        Route::get('/{event}', [App\Http\Controllers\EventController::class, 'show'])->name('show')->middleware('admin');
         Route::get('/{event}/scan', [App\Http\Controllers\EventController::class, 'scan'])->name('scan');
-        Route::get('/{event}/edit', [App\Http\Controllers\EventController::class, 'edit'])->name('edit');
-        Route::put('/{event}', [App\Http\Controllers\EventController::class, 'update'])->name('update');
-        Route::delete('/{event}', [App\Http\Controllers\EventController::class, 'destroy'])->name('destroy');
+        Route::get('/{event}/edit', [App\Http\Controllers\EventController::class, 'edit'])->name('edit')->middleware('admin');
+        Route::put('/{event}', [App\Http\Controllers\EventController::class, 'update'])->name('update')->middleware('admin');
+        Route::delete('/{event}', [App\Http\Controllers\EventController::class, 'destroy'])->name('destroy')->middleware('admin');
     });
 
     // AJAX
