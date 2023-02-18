@@ -29,8 +29,8 @@
                         </div>
                     </form>
 
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="submit" form="update" class="btn btn-primary">Submit</button>
+                    <a href="{{ route('events.index') }}" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</a>
                 </div>
             </div>
         </div>
