@@ -17,7 +17,15 @@ class EventController extends Controller
 
     public function show(Event $event)
     {
-        return view('events.show', compact('event'));
+        return view('events.show', [
+            'event' => $event,
+            'logs' => $event->logs,
+        ]);
+    }
+
+    public function scan(Event $event)
+    {
+        return view('events.scan', compact('event'));
     }
 
     public function create()
