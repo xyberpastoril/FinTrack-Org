@@ -36,6 +36,21 @@ Route::group([
         Route::post('/update/password', [App\Http\Controllers\AccountController::class, 'updatePassword'])->name('updatePassword');
     });
 
+    // Users
+    Route::group([
+        'prefix' => 'users',
+        'as' => 'users.',
+        'middleware' => 'admin',
+    ], function(){
+        Route::get('/', [App\Http\Controllers\UserController::class, 'index'])->name('index');
+        Route::get('/create', [App\Http\Controllers\UserController::class, 'create'])->name('create');
+        Route::post('/', [App\Http\Controllers\UserController::class, 'store'])->name('store');
+        Route::get('/{user}', [App\Http\Controllers\UserController::class, 'show'])->name('show');
+        Route::get('/{user}/edit', [App\Http\Controllers\UserController::class, 'edit'])->name('edit');
+        Route::put('/{user}', [App\Http\Controllers\UserController::class, 'update'])->name('update');
+        Route::delete('/{user}', [App\Http\Controllers\UserController::class, 'destroy'])->name('destroy');
+    });
+
     // Degree Programs
     Route::group([
         'prefix' => 'degree-programs',
