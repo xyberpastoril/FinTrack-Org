@@ -40,9 +40,9 @@
                                 </td>
                                 <td>
                                     <a href="{{ route('events.scan', $event->id) }}"
-                                        class="btn btn-sm btn-primary">Scan</a>
-                                    <a href="{{ route('events.show', $event->id) }}"
-                                            class="btn btn-sm btn-primary">Show</a>
+                                        class="btn btn-sm btn-primary @if($event->status == 'closed') disabled @endif">Scan</a>
+                                    {{-- <a href="{{ route('events.show', $event->id) }}"
+                                            class="btn btn-sm btn-primary">Show</a> --}}
                                     <a href="{{ route('events.edit', $event->id) }}"
                                         class="btn btn-sm btn-secondary">Edit</a>
                                     <form action="{{ route('events.destroy', $event->id) }}" method="post"
