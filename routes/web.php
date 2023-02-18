@@ -76,5 +76,3 @@ Route::group([
     });
 
 });
-
-URL::forceScheme('https');
