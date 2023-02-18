@@ -15,7 +15,11 @@ return new class extends Migration
             $table->id();
             $table->text('name');
             $table->date('date');
-            $table->boolean('status')->nullable(); // null=closed, 0=timein, 1=timeout
+            $table->enum('status', [
+                'closed',
+                'timein',
+                'timeout',
+            ])->default('closed');
             $table->timestamps();
         });
     }
