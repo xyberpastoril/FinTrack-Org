@@ -23,4 +23,4 @@ Homestead.json
 .phpunit.result.cache
 
 # Sensitive seeds
-/database/seeds/*.sql
+/database/seeds/sensitive/*.sql
