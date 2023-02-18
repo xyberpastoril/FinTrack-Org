@@ -8,58 +8,100 @@
                 <div class="card-header">Scanning for {{ $event->name }}</div>
 
                 <div class="card-body">
-                    <!-- input group with button -->
-                    <div class="input-group mb-3">
-                        <select id="choose-camera" class="form-control" id="devices">
-                            <option id="choose-camera-label" selected>Choose...</option>
-
-                        </select>
-                        <div class="input-group-append">
-                            <button class="btn btn-outline-secondary" type="button" id="start-camera" disabled=true>Start
-                                Camera</button>
-                            <button class="btn btn-outline-danger" type="button" id="stop-camera"
-                                style="display:none">Stop
-                                Camera</button>
+                    <nav>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <button class="nav-link active" id="nav-scanner-tab" data-bs-toggle="tab"
+                                data-bs-target="#nav-scanner" type="button" role="tab" aria-controls="nav-scanner"
+                                aria-selected="true">Scanner</button>
+                            <button class="nav-link" id="nav-manual-tab" data-bs-toggle="tab"
+                                data-bs-target="#nav-manual" type="button" role="tab" aria-controls="nav-manual"
+                                aria-selected="false">Manual Input</button>
+                            {{-- <button class="nav-link" id="nav-logged-tab" data-bs-toggle="tab"
+                                data-bs-target="#nav-logged" type="button" role="tab" aria-controls="nav-logged"
+                                aria-selected="false">Logged Students</button> --}}
                         </div>
-                    </div>
+                    </nav>
 
-                    <div class="row">
-                        <div class="col-12 col-lg-3">
-                            <video id="preview" style="width:100%;height:auto;border:1px solid #333;border-radius:5%"></video>
-                        </div>
-                        <div class="col-12 col-lg-9">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5><span id="latest_scan_name">You haven't scanned anything yet.</span></h5>
-                                    <p id="latest_scan_contents" class="card-text" style="display:none">ID Number: <span id="latest_scan_id_number"></span><br>
-                                        Degree Program: <span id="latest_scan_degree_program"></span><br>
-                                        Year Level: <span id="latest_scan_year_level"></span>
-                                    </p>
+                    <!-- create tab content -->
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="nav-scanner" role="tabpanel"
+                            aria-labelledby="nav-scanner-tab">
+                            <!-- input group with button -->
+                            <div class="input-group mb-3">
+                                <select id="choose-camera" class="form-control" id="devices">
+                                    <option id="choose-camera-label" selected>Choose...</option>
+
+                                </select>
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary" type="button" id="start-camera"
+                                        disabled=true>Start
+                                        Camera</button>
+                                    <button class="btn btn-outline-danger" type="button" id="stop-camera"
+                                        style="display:none">Stop
+                                        Camera</button>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12 col-lg-3">
+                                    <video id="preview"
+                                        style="width:100%;height:auto;border:1px solid #333;border-radius:5%"></video>
+                                </div>
+                                <div class="col-12 col-lg-9">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5><span id="latest_scan_name">You haven't scanned anything yet.</span></h5>
+                                            <p id="latest_scan_contents" class="card-text" style="display:none">ID Number: <span
+                                                    id="latest_scan_id_number"></span><br>
+                                                Degree Program: <span id="latest_scan_degree_program"></span><br>
+                                                Year Level: <span id="latest_scan_year_level"></span>
+                                            </p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="tab-pane fade" id="nav-manual" role="tabpanel" aria-labelledby="nav-manual-tab">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" placeholder="Search Query"
+                                    aria-label="Search Query" aria-describedby="button-addon2" id="manual_search_query">
+                            </div>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">ID Number</th>
+                                        <th scope="col">Last Name</th>
+                                        <th scope="col">First Name</th>
+                                        <th scope="col">Degree Program</th>
+                                        <th scope="col">Year Level</th>
+                                        <th scope="col">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="list-students">
+                                    <!-- js will populate this -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-pane fade" id="nav-logged" role="tabpanel" aria-labelledby="nav-logged-tab">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">ID Number</th>
+                                        <th scope="col">Last Name</th>
+                                        <th scope="col">First Name</th>
+                                        <th scope="col">Degree Program</th>
+                                        <th scope="col">Year Level</th>
+                                        <th scope="col">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="logged-students">
+                                    <!-- js will populate this -->
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-
-                    <hr>
-
-                    <h4>Logged Students</h4>
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">ID Number</th>
-                                <th scope="col">Last Name</th>
-                                <th scope="col">First Name</th>
-                                <th scope="col">Degree Program</th>
-                                <th scope="col">Year Level</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="logged-students">
-                            <!-- js will populate this -->
-                        </tbody>
-                    </table>
                 </div>
             </div>
         </div>
@@ -163,7 +205,9 @@
                 // Latest Scan
                 if (response.student) {
                     // $("#latestName").html("<span class='text-success'>" + response.user.lastName + ', ' + response.user.firstName + ' ' + (response.user.middleName ? response.user.middleName[0] + '.' : "") + "</span>");
-                    $("#latest_scan_name").html(`<span class='text-success'>${response.student.last_name}, ${response.student.first_name}</span>`);
+                    $("#latest_scan_name").html(
+                        `<span class='text-success'>${response.student.last_name}, ${response.student.first_name}</span>`
+                        );
                     $("#latest_scan_id_number").text(response.student.id_number);
                     $("#latest_scan_degree_program").text(response.degree_program.abbr);
                     $("#latest_scan_year_level").text(response.student.year_level);
@@ -200,7 +244,7 @@
                 } else {
                     $("#latest_scan_name").html(
                         "<span class='text-danger'>Scan unsuccessful (not on records).</span>"
-                        );
+                    );
                     // Hide the other fields
                     $("#latest_scan_contents").hide("");
                 }
@@ -222,7 +266,7 @@
         });
 
         $('#start-camera').on('click', function () {
-            if(scanner.camera != null) {
+            if (scanner.camera != null) {
                 scanner.start();
                 $('#preview-spinner').remove();
                 $('#start-camera').hide();
@@ -236,7 +280,153 @@
             $('#stop-camera').hide();
         });
 
+        //
+        $("#nav-manual-tab").addEventListener('shown.bs.tab', function () {
+            // force input
+            $('#search_query').focus();
+        });
     });
+
+    $(document).ready(function () {
+        var query = $('#manual_search_query').val();
+        console.log(query);
+
+        const url = window.location.href;
+
+        // Use a regular expression to match the number between the last two slashes
+        const match = url.match(/\/(\d+)\/[^/]*$/);
+
+        // Extract the number from the first capturing group of the match
+        const eventId = match && match[1];
+
+        console.log(eventId); // Output: "2"
+
+        // fetch students list
+        request = $.get(`/ajax/events/${eventId}/students/search/${query}`);
+
+        request.done(function (response) {
+            console.log(response)
+
+            // clear the list-students
+            $('#list-students').html("");
+
+            // populate
+            for (var i = 0; i < response.students.length; i++) {
+                var student = response.students[i];
+                var studentRow = `
+                    <tr>
+                        <th scope="row">${student.id}</th>
+                        <td>${student.id_number}</td>
+                        <td>${student.last_name}</td>
+                        <td>${student.first_name}</td>
+                        <td>${student.abbr}</td>
+                        <td>${student.year_level}</td>
+                        <td>
+                            ${student.log_id
+                                ? `<button class="btn btn-sm btn-success disabled">Logged</button>`
+                                : `<button class="btn btn-sm btn-primary log-student" data-student-id="${student.id}">Log</button>`}
+                        </td>
+                    </tr>
+                `;
+
+                $('#list-students').append(studentRow);
+            }
+        });
+
+    });
+
+    /**
+     * Manual Search
+     */
+
+    $('#manual_search_query').on('input', function () {
+        var query = $('#manual_search_query').val();
+        console.log(query);
+
+        const url = window.location.href;
+
+        // Use a regular expression to match the number between the last two slashes
+        const match = url.match(/\/(\d+)\/[^/]*$/);
+
+        // Extract the number from the first capturing group of the match
+        const eventId = match && match[1];
+
+        console.log(eventId); // Output: "2"
+
+        // fetch students list
+        request = $.get(`/ajax/events/${eventId}/students/search/${query}`);
+
+        request.done(function (response) {
+            console.log(response)
+
+            // clear the list-students
+            $('#list-students').html("");
+
+            // populate
+            for (var i = 0; i < response.students.length; i++) {
+                var student = response.students[i];
+                var studentRow = `
+                    <tr>
+                        <th scope="row">${student.id}</th>
+                        <td>${student.id_number}</td>
+                        <td>${student.last_name}</td>
+                        <td>${student.first_name}</td>
+                        <td>${student.abbr}</td>
+                        <td>${student.year_level}</td>
+                        <td>
+                            ${student.log_id
+                                ? `<button class="btn btn-sm btn-success disabled">Logged</button>`
+                                : `<button class="btn btn-sm btn-primary log-student" data-student-id="${student.id}">Log</button>`}
+                        </td>
+                    </tr>
+                `;
+
+                $('#list-students').append(studentRow);
+            }
+        });
+
+    });
+
+    // Log Student
+    $(document).on('click', '.log-student', function(event){
+
+        let e = event;
+        // get data-student-id
+        var studentId = $(this).data('student-id');
+        console.log(studentId);
+
+        const url = window.location.href;
+
+        // Use a regular expression to match the number between the last two slashes
+        const match = url.match(/\/(\d+)\/[^/]*$/);
+
+        // Extract the number from the first capturing group of the match
+        const eventId = match && match[1];
+
+        var jqxhr = $.post(`/ajax/events/${eventId}/logs/store/byStudentId`, {
+            _token: "{{ csrf_token() }}",
+            student_id: studentId
+        });
+
+        jqxhr.done(function(response){
+            console.log(response);
+            console.log(e.currentTarget);
+
+            // mark as logged
+            $(e.currentTarget).addClass('btn-success');
+            $(e.currentTarget).removeClass('btn-primary');
+
+            // disable button
+            $(e.currentTarget).prop('disabled', true);
+
+            // rename
+            $(e.currentTarget).text('Logged');
+        })
+
+        jqxhr.fail(function(response){
+            console.log(response);
+        })
+    })
 
 </script>
 @endsection
