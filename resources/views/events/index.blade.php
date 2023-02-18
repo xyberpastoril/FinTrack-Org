@@ -46,6 +46,11 @@
                                     @if(Auth::user()->is_admin)
                                     <a href="{{ route('events.edit', $event->id) }}"
                                         class="btn btn-sm btn-secondary">Edit</a>
+                                    <form action="{{ route('events.logs.export', $event->id) }}" method="post"
+                                            style="display: inline-block">
+                                            @csrf
+                                            <button type="submit" class="btn btn-sm btn-secondary">Export Logs</button>
+                                    </form>
                                     <form action="{{ route('events.destroy', $event->id) }}" method="post"
                                         style="display: inline-block">
                                         @csrf

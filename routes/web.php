@@ -84,6 +84,13 @@ Route::group([
         Route::get('/{event}/edit', [App\Http\Controllers\EventController::class, 'edit'])->name('edit')->middleware('admin');
         Route::put('/{event}', [App\Http\Controllers\EventController::class, 'update'])->name('update')->middleware('admin');
         Route::delete('/{event}', [App\Http\Controllers\EventController::class, 'destroy'])->name('destroy')->middleware('admin');
+
+        Route::group([
+            'as' => 'logs.',
+            'middleware' => 'admin',
+        ], function(){
+            Route::post('/{event}/logs/export/', [App\Http\Controllers\EventLogController::class, 'export'])->name('export');
+        });
     });
 
     // AJAX
