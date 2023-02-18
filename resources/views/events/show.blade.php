@@ -17,26 +17,42 @@
                                 <th scope="col">First Name</th>
                                 <th scope="col">Degree Program</th>
                                 <th scope="col">Year Level</th>
-                                <th scope="col">Actions</th>
+                                <th scope="col">Time In</th>
+                                <th scope="col">Time Out</th>
+                                {{-- <th scope="col">Actions</th> --}}
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($logs as $log)
                             <tr>
                                 <th scope="row">{{ $log->id }}</th>
-                                <td>{{ $log->student->id_number }}</td>
-                                <td>{{ $log->student->last_name }}</td>
-                                <td>{{ $log->student->first_name }}</td>
-                                <td>{{ $log->student->degreeProgram->abbr }}</td>
-                                <td>{{ $log->student->year_level }}</td>
+                                <td>{{ $log->id_number }}</td>
+                                <td>{{ $log->last_name }}</td>
+                                <td>{{ $log->first_name }}</td>
+                                <td>{{ $log->abbr }}</td>
+                                <td>{{ $log->year_level }}</td>
                                 <td>
+                                    @if($log->time_in == 0)
+                                        <span class="badge bg-danger">No</span>
+                                    @else
+                                        <span class="badge bg-success">Yes</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($log->time_out == 0)
+                                        <span class="badge bg-danger">No</span>
+                                    @else
+                                        <span class="badge bg-success">Yes</span>
+                                    @endif
+                                </td>
+                                {{-- <td> --}}
                                     {{-- <form action="{{ route('events.remove', [$event->id, $student->id]) }}" method="post"
                                         style="display: inline-block">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-danger">Remove</button>
                                     </form> --}}
-                                </td>
+                                {{-- </td> --}}
                             </tr>
                             @endforeach
                         </tbody>
