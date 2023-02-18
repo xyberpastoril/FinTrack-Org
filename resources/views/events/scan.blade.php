@@ -5,7 +5,17 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Scanning for {{ $event->name }}</div>
+                <div class="card-header">Scanning for {{ $event->name }} [
+                        Status:
+                        @if($event->status == 'closed')
+                            <span id="event-status" class="badge bg-secondary">Closed</span>
+                        @elseif($event->status == 'timein')
+                            <span id="event-status" class="badge bg-primary">Time-In</span>
+                        @elseif($event->status == 'timeout')
+                            <span id="event-status" class="badge bg-success">Time-Out</span>
+                        @endif
+                    ]
+                </div>
 
                 <div class="card-body">
                     <nav>
@@ -247,6 +257,26 @@
                     // Hide the other fields
                     $("#latest_scan_contents").hide("");
                 }
+
+                // update the event-status when necessary
+                if (response.event.status == 'closed') {
+                    $('#event-status').html('Closed');
+                    $('#event-status').removeClass('bg-success');
+                    $('#event-status').removeClass('bg-primary');
+                    $('#event-status').addClass('bg-secondary');
+                }
+                else if(response.event.status == 'timein') {
+                    $('#event-status').html('Time-In');
+                    $('#event-status').removeClass('bg-secondary');
+                    $('#event-status').removeClass('bg-success');
+                    $('#event-status').addClass('bg-primary');
+                }
+                else if(response.event.status == 'timeout') {
+                    $('#event-status').html('Time-Out');
+                    $('#event-status').removeClass('bg-secondary');
+                    $('#event-status').removeClass('bg-primary');
+                    $('#event-status').addClass('bg-success');
+                }
             });
 
             jqxhr.fail(function (response) {
@@ -380,6 +410,26 @@
 
                 $('#list-students').append(studentRow);
             }
+
+            // update the event-status when necessary
+            if (response.event.status == 'closed') {
+                $('#event-status').html('Closed');
+                $('#event-status').removeClass('bg-success');
+                $('#event-status').removeClass('bg-primary');
+                $('#event-status').addClass('bg-secondary');
+            }
+            else if(response.event.status == 'timein') {
+                $('#event-status').html('Time-In');
+                $('#event-status').removeClass('bg-secondary');
+                $('#event-status').removeClass('bg-success');
+                $('#event-status').addClass('bg-primary');
+            }
+            else if(response.event.status == 'timeout') {
+                $('#event-status').html('Time-Out');
+                $('#event-status').removeClass('bg-secondary');
+                $('#event-status').removeClass('bg-primary');
+                $('#event-status').addClass('bg-success');
+            }
         });
 
     });
@@ -418,6 +468,26 @@
 
             // rename
             $(e.currentTarget).text('Logged');
+
+            // update the event-status when necessary
+            if (response.event.status == 'closed') {
+                $('#event-status').html('Closed');
+                $('#event-status').removeClass('bg-success');
+                $('#event-status').removeClass('bg-primary');
+                $('#event-status').addClass('bg-secondary');
+            }
+            else if(response.event.status == 'timein') {
+                $('#event-status').html('Time-In');
+                $('#event-status').removeClass('bg-secondary');
+                $('#event-status').removeClass('bg-success');
+                $('#event-status').addClass('bg-primary');
+            }
+            else if(response.event.status == 'timeout') {
+                $('#event-status').html('Time-Out');
+                $('#event-status').removeClass('bg-secondary');
+                $('#event-status').removeClass('bg-primary');
+                $('#event-status').addClass('bg-success');
+            }
         })
 
         jqxhr.fail(function(response){
