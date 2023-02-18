@@ -50,7 +50,6 @@ class User extends Authenticatable
      */
     protected $encryptable = [
         'name',
-        'email',
     ];
 
     public function eventLogs()
