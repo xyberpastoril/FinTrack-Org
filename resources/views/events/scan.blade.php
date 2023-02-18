@@ -154,7 +154,7 @@
                     // $("#latestName").html("<span class='text-success'>" + response.user.lastName + ', ' + response.user.firstName + ' ' + (response.user.middleName ? response.user.middleName[0] + '.' : "") + "</span>");
                     $("#latest_scan_name").html(`<span class='text-success'>${response.student.last_name}, ${response.student.first_name}</span>`);
                     $("#latest_scan_id_number").text(response.student.id_number);
-                    $("#latest_scan_degree_program").text(response.student.degree_program);
+                    $("#latest_scan_degree_program").text(response.degree_program.abbr);
                     $("#latest_scan_year_level").text(response.student.year_level);
 
                     // show the other fields
@@ -167,13 +167,14 @@
                     // Add to logged-students
                     var student = response.student;
                     var log = response.log;
+                    var degree_program = response.degree_program;
                     var studentRow = `
                         <tr>
                             <th scope="row">${response.log.id}</th>
                             <td>${student.id_number}</td>
                             <td>${student.last_name}</td>
                             <td>${student.first_name}</td>
-                            <td>${student.degree_program.abbr}</td>
+                            <td>${degree_program.abbr}</td>
                             <td>${student.year_level}</td>
                             <td>${log.status}</td>
                             <td>
