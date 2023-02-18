@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\EventLogExport;
 use App\Http\Requests\EventLog\StoreEventLogByStudentIdRequest;
 use Illuminate\Http\Request;
 use App\Models\Event;
@@ -9,6 +10,7 @@ use App\Http\Requests\EventLog\StoreEventLogRequest;
 use App\Models\EventLog;
 use App\Models\Student;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class EventLogController extends Controller
 {
@@ -36,6 +38,7 @@ class EventLogController extends Controller
 
         return response()->json([
             'students' => $students,
+            'event' => $event,
         ]);
     }
 
@@ -59,6 +62,7 @@ class EventLogController extends Controller
             'student' => $request->student,
             'degree_program' => $request->student->degreeProgram,
             'log' => $log,
+            'event' => $event,
         ]);
     }
 
@@ -83,6 +87,7 @@ class EventLogController extends Controller
             'student' => $request->student,
             'degree_program' => $request->student->degreeProgram,
             'log' => $log,
+            'event' => $event,
         ]);
     }
 
@@ -93,5 +98,10 @@ class EventLogController extends Controller
         return response()->json([
             'message' => 'Event log deleted successfully.',
         ]);
+    }
+
+    public function export(Event $event)
+    {
+        return Excel::download(new EventLogExport($event), "event-logs-{$event->id}-{$event->name}.xlsx");
     }
 }
