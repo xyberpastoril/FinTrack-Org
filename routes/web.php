@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\URL;
 
 /*
 |--------------------------------------------------------------------------
@@ -76,3 +77,4 @@ Route::group([
 
 });
 
+URL::forceScheme('https');
