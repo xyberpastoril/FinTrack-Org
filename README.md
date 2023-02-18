@@ -67,11 +67,12 @@ For example, the **`BSCS`** entry we created earlier is index **`1`**. Hence,
 | 12-3-45678 | Pastoril     | Xyber | **1** | 4 |
 
 ### QR Scanning
-The QR Scanning functionality requires `https`. It is possible to enable using ngrok, but you need to add a temporary line at the end of `routes/web.php`:
+The QR Scanning functionality requires `https`. It is possible to enable using ngrok, but you may need to add a temporary line at the end of `routes/web.php`:
 ```
 URL::forceScheme('https');
 ```
-It is also possible to enable offline, but it wasn't tested yet if it can be shared across different PCs. (For Ubuntu)
+
+It is also possible to enable offline, for the case of Ubuntu. Unfortunately, I haven't explored how to implement it yet.
 ```
 sudo php artisan serve --port=443
 ```
