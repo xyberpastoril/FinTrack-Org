@@ -16,7 +16,6 @@ class EventLogController extends Controller
     {
         $students = Student::select(
                 'students.id',
-                'students.id_number',
                 'students.first_name',
                 'students.last_name',
                 'students.year_level',

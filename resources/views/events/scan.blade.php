@@ -70,7 +70,6 @@
                                 <thead>
                                     <tr>
                                         <th scope="col">#</th>
-                                        <th scope="col">ID Number</th>
                                         <th scope="col">Last Name</th>
                                         <th scope="col">First Name</th>
                                         <th scope="col">Degree Program</th>
@@ -316,7 +315,6 @@
                 var studentRow = `
                     <tr>
                         <th scope="row">${student.id}</th>
-                        <td>${student.id_number}</td>
                         <td>${student.last_name}</td>
                         <td>${student.first_name}</td>
                         <td>${student.abbr}</td>
@@ -368,7 +366,6 @@
                 var studentRow = `
                     <tr>
                         <th scope="row">${student.id}</th>
-                        <td>${student.id_number}</td>
                         <td>${student.last_name}</td>
                         <td>${student.first_name}</td>
                         <td>${student.abbr}</td>
@@ -426,6 +423,9 @@
         jqxhr.fail(function(response){
             console.log(response);
         })
+
+        $('#manual_search_query').val("");
+        $('#manual_search_query').focus();
     })
 
 </script>
