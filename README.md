@@ -72,7 +72,7 @@ The QR Scanning functionality requires `https`. It is possible to enable using n
 URL::forceScheme('https');
 ```
 
-It is also possible to enable offline, for the case of Ubuntu. Unfortunately, I haven't explored how to implement it yet.
+It is also possible to enable offline, for the case of Ubuntu. Unfortunately, I haven't explored how to access it from other PCs.
 ```
 sudo php artisan serve --port=443
 ```
