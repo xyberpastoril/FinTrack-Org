@@ -25,6 +25,9 @@ class EventController extends Controller
 
     public function scan(Event $event)
     {
+        if($event->status == 'closed')
+            return redirect()->route('events.index')->with('error', 'Event is closed.');
+            
         return view('events.scan', compact('event'));
     }
 

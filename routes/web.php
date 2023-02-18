@@ -71,6 +71,8 @@ Route::group([
         ], function(){
 
             Route::post('{event}/logs/store/', [App\Http\Controllers\EventLogController::class, 'storeAjax'])->name('storeAjax');
+            Route::post('{event}/logs/store/byStudentId/', [App\Http\Controllers\EventLogController::class, 'storeByStudentIdAjax'])->name('storeByStudentIdAjax');
+            Route::get('{event}/students/search/{query?}', [App\Http\Controllers\EventLogController::class, 'searchStudentAjax'])->name('searchStudentAjax');
         });
 
     });
