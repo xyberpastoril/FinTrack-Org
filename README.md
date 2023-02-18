@@ -1,6 +1,7 @@
 # [Playground] - QR Attendance Management System
 
-This is my own implementation of the QR Attendance System using Laravel 10. Inspired from vsuqrams by R. R.
+This is my own implementation of the QR Attendance System using Laravel 10. Inspired from `vsuqrams` by R. R.
+
 P.S. This is a fast-paced implementation, not all features are implemented.
 
 ## Requirements
@@ -40,7 +41,7 @@ This can be done by opening XAMPP, run Apache and MySQL, then create a database 
 ### 7. Update `.env` values when necessary (Optional)
 Just in case your database server's configuration is different from the default `root` and blank password, or the name of the database, you may reflect those changes to the `.env` file.
 
-### 8. Migrate and seed the database. [SQL Seeders not included for privacy purposes.]
+### 8. Migrate and seed the database.
 ```
 php artisan migrate --seed
 ```
@@ -48,4 +49,25 @@ php artisan migrate --seed
 ### 10. Finally, run the app server.
 ```
 php artisan serve
+```
+---
+
+### Importing Data
+
+Create a `.csv` file containing the degree programs' data. Its columns are as follows: `name`, and `abbr`.
+Example:
+| name         | abbr     |
+|--------------|-----------|
+| Bachelor of Science in Computer Science | BSCS     |
+
+Create a `.csv` file containing the students' data. Its columns are also as follows: `id_number`, `last_name`, `first_name`, **`degree_program_id`**, `year_level`. The `degree_program_id` is an index starting from `1` based on the `.csv` file created from earlier.
+For example, the **`BSCS`** entry we created earlier is index **`1`**. Hence,
+| id_number       | last_name     | first_name       | degree_program_id      | year_level
+|--------------|-----------|-----------|-----------|-----------|
+| 12-3-45678 | Pastoril     | Xyber | **1** | 4 |
+
+### QR Scanning
+The QR Scanning functionality requires `https`. To enable, either use `ngrok` or run the server locally as follows:
+```
+sudo php artisan serve --port=443
 ```
