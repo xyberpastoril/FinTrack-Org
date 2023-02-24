@@ -28,4 +28,28 @@ class AttendanceEventController extends Controller
 
         return redirect()->route('events.show', $event->id)->with('success', 'Attendance Event created successfully.');
     }
+
+    public function edit(Event $event, AttendanceEvent $attendance)
+    {
+        return view('events.attendances.edit', [
+            'event' => $event,
+            'attendance' => $attendance,
+        ]);
+    }
+
+    public function update(UpdateAttendanceEventRequest $request, Event $event, AttendanceEvent $attendance)
+    {
+        $validated = $request->validated();
+
+        $attendance->update([
+            'name' => $validated['name'],
+            'date' => $validated['date'],
+            'status' => $validated['status'],
+            'required_logs' => $validated['required_logs'],
+            'fines_amount_per_log' => $validated['fines_amount_per_log'],
+        ]);
+
+        return redirect()->route('events.show', $event->id)->with('success', 'Attendance Event updated successfully.');
+    }
+
 }

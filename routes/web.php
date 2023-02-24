@@ -94,6 +94,8 @@ Route::group([
             'as' => 'attendances.',
         ], function(){
             Route::post('/', [App\Http\Controllers\AttendanceEventController::class, 'store'])->name('store')->middleware('admin');
+            Route::get('/{attendance}/edit', [App\Http\Controllers\AttendanceEventController::class, 'edit'])->name('edit')->middleware('admin');
+            Route::put('/{attendance}', [App\Http\Controllers\AttendanceEventController::class, 'update'])->name('update')->middleware('admin');
         });
 
     });
