@@ -52,6 +52,8 @@
                                     </td>
                                     <td>{{ $attendanceEvent->fines_amount_per_log }}</td>
                                     <td>
+                                        <a href="{{ route('events.attendances.edit', ['event' => $event->id, 'attendance' => $attendanceEvent->id]) }}"
+                                            class="btn btn-sm btn-secondary">Edit</a>
                                         {{-- <form action="{{ route('events.remove', [$event->id, $student->id]) }}" method="post"
                                             style="display: inline-block">
                                             @csrf
