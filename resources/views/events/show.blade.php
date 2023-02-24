@@ -50,7 +50,7 @@
                                             <span class="badge bg-danger">2</span>
                                         @endif
                                     </td>
-                                    <td>{{ $attendanceEvent->fines_amount_per_log }}</td>
+                                    <td class="text-end">{{ number_format($attendanceEvent->fines_amount_per_log, 2) }}</td>
                                     <td>
                                         <a href="{{ route('events.attendances.edit', ['event' => $event->id, 'attendance' => $attendanceEvent->id]) }}"
                                             class="btn btn-sm btn-secondary">Edit</a>
