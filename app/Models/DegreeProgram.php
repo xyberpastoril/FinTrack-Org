@@ -14,8 +14,8 @@ class DegreeProgram extends Model
         'abbr',
     ];
 
-    public function students()
+    public function enrolledStudents()
     {
-        return $this->hasMany(Student::class);
+        return $this->hasMany(EnrolledStudent::class);
     }
 }

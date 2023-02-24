@@ -16,13 +16,11 @@ class Student extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'degree_program_id',
         'id_number',
         'last_name',
         'first_name',
-        'year_level',
     ];
-    
+
     /**
      * The attributes that should be encrypted on save.
      *
@@ -34,9 +32,9 @@ class Student extends Model
         'first_name',
     ];
 
-    public function degreeProgram()
+    public function enrolledSemesters()
     {
-        return $this->belongsTo(DegreeProgram::class);
+        return $this->hasMany(EnrolledStudent::class);
     }
 
     public function eventLogs()

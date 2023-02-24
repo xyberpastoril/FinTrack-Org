@@ -13,4 +13,9 @@ class Semester extends Model
         'year',
         'semester',
     ];
+
+    public function enrolledStudents()
+    {
+        return $this->hasMany(EnrolledStudent::class);
+    }
 }
