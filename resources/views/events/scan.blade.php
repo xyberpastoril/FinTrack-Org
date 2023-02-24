@@ -15,6 +15,12 @@
                             <span id="event-status" class="badge bg-success">Time-Out</span>
                         @endif
                     ]
+                    [
+                        Scanned:
+                        <strong id="log-count">{{ $log_count }}</strong>
+                        of
+                        <strong id="student-count">{{ $student_count }}</strong>
+                    ]
                 </div>
 
                 <div class="card-body">
@@ -74,7 +80,7 @@
                         <div class="tab-pane fade" id="nav-manual" role="tabpanel" aria-labelledby="nav-manual-tab">
                             <div class="input-group mb-3">
                                 <input type="text" class="form-control" placeholder="Search Query"
-                                    aria-label="Search Query" aria-describedby="button-addon2" id="manual_search_query">
+                                    aria-label="Search Query" aria-describedby="button-addon2" id="manual_search_query" autocomplete="off`">
                             </div>
                             <table class="table table-striped">
                                 <thead>
@@ -361,6 +367,22 @@
             }
         });
 
+        setInterval(function (){
+            request = $.get(`/ajax/events/${eventId}/students/count/`);
+            request.done(function (response) {
+                console.log("Refreshing student and log count")
+                console.log(response)
+
+                // update log_count and student_count
+                $('#log-count').html(response.log_count)
+                $('#student-count').html(response.student_count)
+            });
+
+            request.fail(function(response){
+                console.log(response)
+            })
+        }, 30000);
+
     });
 
     /**
@@ -430,6 +452,10 @@
                 $('#event-status').removeClass('bg-primary');
                 $('#event-status').addClass('bg-success');
             }
+
+            // update log_count and student_count
+            $('#log-count').html(response.log_count)
+            $('#student-count').html(response.student_count)
         });
 
     });
@@ -488,6 +514,10 @@
                 $('#event-status').removeClass('bg-primary');
                 $('#event-status').addClass('bg-success');
             }
+
+            // update log_count and student_count
+            $('#log-count').html(response.log_count)
+            $('#student-count').html(response.student_count)
         })
 
         jqxhr.fail(function(response){

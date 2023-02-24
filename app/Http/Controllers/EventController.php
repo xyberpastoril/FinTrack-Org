@@ -57,7 +57,15 @@ class EventController extends Controller
         if($event->status == 'closed')
             return redirect()->route('events.index')->with('error', 'Event is closed.');
 
-        return view('events.scan', compact('event'));
+        // Get event log count for current $event->status
+        $logCount = $event->logs()->where('status', $event->status)->count();
+        $studentCount = Student::count();
+
+        return view('events.scan', [
+            'event' => $event,
+            'log_count'=> $logCount,
+            'student_count' => $studentCount
+        ]);
     }
 
     public function create()
