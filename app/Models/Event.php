@@ -30,4 +30,9 @@ class Event extends Model
     protected $encryptable = [
         'name',
     ];
+
+    public function attendanceEvents()
+    {
+        return $this->hasMany(AttendanceEvent::class);
+    }
 }
