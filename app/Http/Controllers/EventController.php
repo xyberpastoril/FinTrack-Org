@@ -16,6 +16,13 @@ class EventController extends Controller
         return view('events.index', compact('events'));
     }
 
+    public function show(Event $event)
+    {
+        $event->attendanceEvents;
+
+        return view('events.show', compact('event'));
+    }
+
     public function store(StoreEventRequest $request)
     {
         $validated = $request->validated();

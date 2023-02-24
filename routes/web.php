@@ -83,20 +83,19 @@ Route::group([
         'as' => 'events.',
     ], function(){
         Route::get('/', [App\Http\Controllers\EventController::class, 'index'])->name('index');
-        Route::get('/create', [App\Http\Controllers\EventController::class, 'create'])->name('create')->middleware('admin');
         Route::post('/', [App\Http\Controllers\EventController::class, 'store'])->name('store')->middleware('admin');
-        Route::get('/{event}', [App\Http\Controllers\EventController::class, 'show'])->name('show')->middleware('admin');
-        Route::get('/{event}/scan', [App\Http\Controllers\EventController::class, 'scan'])->name('scan');
+        Route::get('/{event}', [App\Http\Controllers\EventController::class, 'show'])->name('show');
         Route::get('/{event}/edit', [App\Http\Controllers\EventController::class, 'edit'])->name('edit')->middleware('admin');
         Route::put('/{event}', [App\Http\Controllers\EventController::class, 'update'])->name('update')->middleware('admin');
         Route::delete('/{event}', [App\Http\Controllers\EventController::class, 'destroy'])->name('destroy')->middleware('admin');
 
         Route::group([
-            'as' => 'logs.',
-            'middleware' => 'admin',
+            'prefix' => '{event}/attendance',
+            'as' => 'attendances.',
         ], function(){
-            Route::post('/{event}/logs/export/', [App\Http\Controllers\EventLogController::class, 'export'])->name('export');
+            Route::post('/', [App\Http\Controllers\AttendanceEventController::class, 'store'])->name('store')->middleware('admin');
         });
+
     });
 
     // AJAX
