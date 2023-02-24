@@ -88,4 +88,10 @@ class AttendanceEventController extends Controller
         return redirect()->route('events.show', $event->id)->with('success', 'Attendance Event updated successfully.');
     }
 
+    public function destroy(Event $event, AttendanceEvent $attendance)
+    {
+        $attendance->delete();
+
+        return redirect()->route('events.show', $event->id)->with('success', 'Attendance Event deleted successfully.');
+    }
 }

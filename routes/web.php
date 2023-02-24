@@ -97,6 +97,7 @@ Route::group([
             Route::get('/{attendance}', [App\Http\Controllers\AttendanceEventController::class, 'show'])->name('show');
             Route::get('/{attendance}/edit', [App\Http\Controllers\AttendanceEventController::class, 'edit'])->name('edit')->middleware('admin');
             Route::put('/{attendance}', [App\Http\Controllers\AttendanceEventController::class, 'update'])->name('update')->middleware('admin');
+            Route::delete('/{attendance}', [App\Http\Controllers\AttendanceEventController::class, 'destroy'])->name('destroy')->middleware('admin');
 
             Route::group([
                 'as' => 'logs.',
