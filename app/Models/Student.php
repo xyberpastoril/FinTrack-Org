@@ -36,9 +36,4 @@ class Student extends Model
     {
         return $this->hasMany(EnrolledStudent::class);
     }
-
-    public function eventLogs()
-    {
-        return $this->hasMany(EventLog::class);
-    }
 }

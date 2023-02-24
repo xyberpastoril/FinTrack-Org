@@ -53,8 +53,8 @@ class User extends Authenticatable
         'name',
     ];
 
-    public function eventLogs()
+    public function attendanceLogs()
     {
-        return $this->hasMany(EventLog::class, 'logged_by_user_id');
+        return $this->hasMany(AttendanceEventLog::class, 'logged_by_user_id');
     }
 }
