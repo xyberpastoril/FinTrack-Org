@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Students') }}</div>
+                <div class="card-header">{{ __('Enrolled Students') }}</div>
 
                 <div class="card-body">
                     <!-- Button trigger modal -->
@@ -29,9 +29,9 @@
                             @foreach ($students as $student)
                             <tr>
                                 <th scope="row">{{ $student->id }}</th>
-                                <td>{{ $student->id_number }}</td>
-                                <td>{{ $student->last_name }}</td>
-                                <td>{{ $student->first_name }}</td>
+                                <td>{{ $student->student->id_number }}</td>
+                                <td>{{ $student->student->last_name }}</td>
+                                <td>{{ $student->student->first_name }}</td>
                                 <td>{{ $student->degreeProgram->abbr }}</td>
                                 <td>{{ $student->year_level }}</td>
                                 <td>
@@ -64,7 +64,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="import" action="{{ route('students.import') }}" method="post" enctype="multipart/form-data">
+                <form id="import" action="{{ route('students.enrolled.import') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="mb-3">
                         <label for="importFile" class="form-label">File</label>

@@ -67,8 +67,14 @@ Route::group([
         'as' => 'students.',
         'middleware' => 'admin',
     ], function(){
-        Route::get('/', [App\Http\Controllers\StudentController::class, 'index'])->name('index');
-        Route::post('/import', [App\Http\Controllers\StudentController::class, 'import'])->name('import');
+
+        Route::group([
+            'prefix' => 'enrolled',
+            'as' => 'enrolled.',
+        ], function(){
+            Route::get('/', [App\Http\Controllers\EnrolledStudentController::class, 'index'])->name('index');
+            Route::post('/import', [App\Http\Controllers\EnrolledStudentController::class, 'import'])->name('import');
+        });
     });
 
     // Events

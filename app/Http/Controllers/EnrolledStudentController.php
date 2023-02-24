@@ -6,14 +6,15 @@ use Illuminate\Http\Request;
 use App\Http\Requests\Student\ImportStudentsRequest;
 use App\Models\Student;
 use App\Imports\StudentsImport;
+use App\Models\EnrolledStudent;
 use Maatwebsite\Excel\Facades\Excel;
 
-class StudentController extends Controller
+class EnrolledStudentController extends Controller
 {
     public function index()
     {
-        $students = Student::all();
-        return view('students.index', compact('students'));
+        $students = EnrolledStudent::where('semester_id', 1)->get();
+        return view('students.enrolled.index', compact('students'));
     }
 
     public function import(ImportStudentsRequest $request)
@@ -22,6 +23,6 @@ class StudentController extends Controller
 
         Excel::import(new StudentsImport, $validated['file']);
 
-        return redirect()->route('students.index')->with('success', 'Students imported successfully.');
+        return redirect()->route('students.enrolled.index')->with('success', 'Students imported successfully.');
     }
 }
