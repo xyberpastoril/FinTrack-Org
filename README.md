@@ -1,4 +1,4 @@
-# FinTrack
+# FinTrack for University Organizations
 
 A work-in-progress demo web project implementing a QR Attendance and Finance Management System for university organizations using Laravel 10. It allow organization officers to seamlessly manage their organization's financial status.
 
@@ -9,12 +9,12 @@ A work-in-progress demo web project implementing a QR Attendance and Finance Man
 ## Setup Instructions
 ### 1. Clone GitHub repo for this project locally.
 ```
-git clone https://github.com/xyberpastoril/FinTrack.git
+git clone https://github.com/xyberpastoril/FinTrack-Org.git
 ```
 
-### 2. `cd` into the `FinTrack` project.
+### 2. `cd` into the `FinTrack-Org` project.
 ```
-cd FinTrack
+cd FinTrack-Org
 ```
 
 ### 3. Install Composer Packages required for this project.
@@ -23,7 +23,7 @@ composer install
 ```
 
 ### 4. Create a copy of `.env` file from `.env.example`. 
-The `.env.example` file is already filled with default database information including the name of the database `fintrack`.
+The `.env.example` file is already filled with default database information including the name of the database `fintrack_org`.
 ```
 cp .env.example .env
 ```
@@ -33,7 +33,7 @@ cp .env.example .env
 php artisan key:generate
 ```
 
-### 6. Create an empty database named `fintrack`.
+### 6. Create an empty database named `fintrack_org`.
 This can be done by opening XAMPP, run Apache and MySQL, then create a database to phpMyAdmin.
 
 ### 7. Update `.env` values when necessary (Optional)
