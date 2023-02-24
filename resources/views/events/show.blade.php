@@ -10,11 +10,11 @@
                 <div class="card-body">
                     <h4>Attendance Events</h4>
                     <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">
+                    <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#createModal">
                         Create
                     </button>
                     <div class="table-responsive">
-                        <table class="table table-striped">
+                        <table class="table table-striped table-bordered ">
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
