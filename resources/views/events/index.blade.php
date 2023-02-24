@@ -36,8 +36,8 @@
                                     {{-- <a href="{{ route('events.show', $event->id) }}"
                                             class="btn btn-sm btn-primary">Show</a> --}}
                                     @if(Auth::user()->is_admin)
-                                    {{-- <a href="{{ route('events.edit', $event->id) }}"
-                                        class="btn btn-sm btn-secondary">Edit</a> --}}
+                                    <a href="{{ route('events.edit', $event->id) }}"
+                                        class="btn btn-sm btn-secondary">Edit</a>
                                     {{-- <form action="{{ route('events.logs.export', $event->id) }}" method="post"
                                             style="display: inline-block">
                                             @csrf

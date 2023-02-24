@@ -16,16 +16,12 @@
                             <input type="text" class="form-control" id="name" name="name" required value="{{ $event->name }}">
                         </div>
                         <div class="mb-3">
-                            <label for="date" class="form-label">Date</label>
-                            <input type="date" class="form-control" id="date" name="date" required value="{{ $event->date }}">
+                            <label for="date" class="form-label">Date From</label>
+                            <input type="date" class="form-control" id="date" name="date_from" required value="{{ $event->date_from }}">
                         </div>
                         <div class="mb-3">
-                            <label for="status" class="form-label">Status</label>
-                            <select class="form-select" id="status" name="status">
-                                <option value="closed" @if($event->status == 'closed') selected @endif>Closed</option>
-                                <option value="timein" @if($event->status == 'timein') selected @endif>Time-In</option>
-                                <option value="timeout" @if($event->status == 'timeout') selected @endif>Time-Out</option>
-                            </select>
+                            <label for="date" class="form-label">Date From</label>
+                            <input type="date" class="form-control" id="date" name="date_to" required value="{{ $event->date_to }}">
                         </div>
                     </form>
 

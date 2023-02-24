@@ -29,4 +29,22 @@ class EventController extends Controller
 
         return redirect()->route('events.index')->with('success', 'Event created successfully.');
     }
+
+    public function edit(Event $event)
+    {
+        return view('events.edit', compact('event'));
+    }
+
+    public function update(StoreEventRequest $request, Event $event)
+    {
+        $validated = $request->validated();
+
+        $event->update([
+            'name' => $validated['name'],
+            'date_from' => $validated['date_from'],
+            'date_to' => $validated['date_to'],
+        ]);
+
+        return redirect()->route('events.index')->with('success', 'Event updated successfully.');
+    }
 }
