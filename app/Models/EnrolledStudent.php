@@ -30,4 +30,9 @@ class EnrolledStudent extends Model
     {
         return $this->belongsTo(Student::class);
     }
+
+    public function attendanceEventLogs()
+    {
+        return $this->hasMany(AttendanceEventLog::class);
+    }
 }

@@ -4,22 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use ESolution\DBEncryption\Traits\EncryptedAttribute;
 
-class Event extends Model
+class AttendanceEvent extends Model
 {
-    use HasFactory, EncryptedAttribute;
+    use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
-        'semester_id',
+        'event_id',
         'name',
-        'date_from',
-        'date_to',
+        'date',
+        'status',
+        'required_logs',
+        'fines_amount_per_log',
     ];
 
     /**
@@ -31,8 +27,13 @@ class Event extends Model
         'name',
     ];
 
+    public function event()
+    {
+        return $this->belongsTo(Event::class);
+    }
+
     public function logs()
     {
-        return $this->hasMany(EventLog::class);
+        return $this->hasMany(AttendanceEventLog::class);
     }
 }
