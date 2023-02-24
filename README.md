@@ -1,6 +1,6 @@
-# FinTrack for University Organizations
+# FinTrack for University Student Organizations
 
-A work-in-progress demo web project implementing a QR Attendance and Finance Management System for university organizations using Laravel 10. It allow organization officers to seamlessly manage their organization's financial status.
+A work-in-progress demo web project implementing a QR Attendance and Finance Management System for university student organizations using Laravel 10. It allow officers to seamlessly manage their student organization's financial status.
 
 ## Requirements
 - PHP Version = 8.1
