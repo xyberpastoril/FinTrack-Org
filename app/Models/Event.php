@@ -16,9 +16,10 @@ class Event extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'semester_id',
         'name',
-        'date',
-        'status',
+        'date_from',
+        'date_to',
     ];
 
     /**
@@ -29,9 +30,4 @@ class Event extends Model
     protected $encryptable = [
         'name',
     ];
-
-    public function logs()
-    {
-        return $this->hasMany(EventLog::class);
-    }
 }

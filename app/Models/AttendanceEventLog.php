@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class EventLog extends Model
+class AttendanceEventLog extends Model
 {
     use HasFactory;
 
@@ -15,20 +15,20 @@ class EventLog extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'student_id',
-        'event_id',
+        'enrolled_student_id',
+        'attendance_event_id',
         'status',
         'logged_by_user_id',
     ];
 
-    public function student()
+    public function enrolledStudent()
     {
-        return $this->belongsTo(Student::class);
+        return $this->belongsTo(EnrolledStudent::class);
     }
 
-    public function event()
+    public function attendanceEvent()
     {
-        return $this->belongsTo(Event::class);
+        return $this->belongsTo(AttendanceEvent::class);
     }
 
     public function loggedUser()
