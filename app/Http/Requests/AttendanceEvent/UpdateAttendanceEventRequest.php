@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Event;
+namespace App\Http\Requests\AttendanceEvent;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class UpdateEventRequest extends FormRequest
+class UpdateAttendanceEventRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,7 +25,9 @@ class UpdateEventRequest extends FormRequest
         return [
             'name' => ['required'],
             'date' => ['required', 'date'],
-            'status' => ['sometimes'],
+            'status' => ['required'],
+            'required_logs' => ['required'],
+            'fines_amount_per_log' => ['required', 'numeric', 'min:0'],
         ];
     }
 }

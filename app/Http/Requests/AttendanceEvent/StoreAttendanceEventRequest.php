@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Event;
+namespace App\Http\Requests\AttendanceEvent;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class StoreEventRequest extends FormRequest
+class StoreAttendanceEventRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,10 @@ class StoreEventRequest extends FormRequest
     {
         return [
             'name' => ['required'],
-            'date_from' => ['required', 'date'],
-            'date_to' => ['required', 'date'],
+            'date' => ['required', 'date'],
+            'status' => ['required'],
+            'required_logs' => ['required'],
+            'fines_amount_per_log' => ['required', 'numeric', 'min:0'],
         ];
     }
 }

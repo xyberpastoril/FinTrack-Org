@@ -5,13 +5,13 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Scanning for {{ $event->name }} [
+                <div class="card-header">Scanning for {{ $attendance->name }} [
                         Status:
-                        @if($event->status == 'closed')
+                        @if($attendance->status == 'closed')
                             <span id="event-status" class="badge bg-secondary">Closed</span>
-                        @elseif($event->status == 'timein')
+                        @elseif($attendance->status == 'timein')
                             <span id="event-status" class="badge bg-primary">Time-In</span>
-                        @elseif($event->status == 'timeout')
+                        @elseif($attendance->status == 'timeout')
                             <span id="event-status" class="badge bg-success">Time-Out</span>
                         @endif
                     ]
@@ -201,16 +201,18 @@
 
             const url = window.location.href;
 
-            // Use a regular expression to match the number between the last two slashes
-            const match = url.match(/\/(\d+)\/[^/]*$/);
+            // Split the URL at the slash characters
+            const parts = url.split("/");
 
-            // Extract the number from the first capturing group of the match
-            const eventId = match && match[1];
+            // Extract the event ID and attendance ID from the URL
+            const eventId = parts[4];
+            const attendanceId = parts[6];
 
-            console.log(eventId); // Output: "2"
+            console.log(eventId); // Output: "123"
+            console.log(attendanceId); // Output: "456"
 
 
-            var jqxhr = $.post(`/ajax/events/${eventId}/logs/store`, {
+            var jqxhr = $.post(`/ajax/events/${eventId}/attendances/${attendanceId}/logs/store`, {
                 _token: "{{ csrf_token() }}",
                 id_number: content
             });
@@ -219,13 +221,17 @@
                 console.log(response);
                 // Latest Scan
                 if (response.student) {
+                    var student = response.student;
+                    var log = response.log;
+                    var enrolled_student = response.enrolled_student;
+
                     // $("#latestName").html("<span class='text-success'>" + response.user.lastName + ', ' + response.user.firstName + ' ' + (response.user.middleName ? response.user.middleName[0] + '.' : "") + "</span>");
                     $("#latest_scan_name").html(
-                        `<span class='text-success'>${response.student.last_name}, ${response.student.first_name}</span>`
+                        `<span class='text-success'>${student.last_name}, ${student.first_name}</span>`
                         );
-                    $("#latest_scan_id_number").text(response.student.id_number);
-                    $("#latest_scan_degree_program").text(response.degree_program.abbr);
-                    $("#latest_scan_year_level").text(response.student.year_level);
+                    $("#latest_scan_id_number").text(student.id_number);
+                    $("#latest_scan_degree_program").text(enrolled_student.degree_program.abbr);
+                    $("#latest_scan_year_level").text(enrolled_student.year_level);
 
                     // show the other fields
                     $("#latest_scan_contents").show();
@@ -235,17 +241,15 @@
                     window.navigator.vibrate(200); // vibrate for 200ms
 
                     // Add to logged-students
-                    var student = response.student;
-                    var log = response.log;
-                    var degree_program = response.degree_program;
+
                     var studentRow = `
                         <tr>
                             <th scope="row">${response.log.id}</th>
                             <td>${student.id_number}</td>
                             <td>${student.last_name}</td>
                             <td>${student.first_name}</td>
-                            <td>${degree_program.abbr}</td>
-                            <td>${student.year_level}</td>
+                            <td>${enrolled_student.degree_program.abbr}</td>
+                            <td>${enrolled_student.year_level}</td>
                             <td>${log.status}</td>
                             <td>
                                 <a href="/events/1/logs/${log.id}/delete" class="btn btn-sm btn-danger">Delete</a>
@@ -328,16 +332,18 @@
 
         const url = window.location.href;
 
-        // Use a regular expression to match the number between the last two slashes
-        const match = url.match(/\/(\d+)\/[^/]*$/);
+        // Split the URL at the slash characters
+        const parts = url.split("/");
 
-        // Extract the number from the first capturing group of the match
-        const eventId = match && match[1];
+        // Extract the event ID and attendance ID from the URL
+        const eventId = parts[4];
+        const attendanceId = parts[6];
 
-        console.log(eventId); // Output: "2"
+        console.log(eventId); // Output: "123"
+        console.log(attendanceId); // Output: "456"
 
         // fetch students list
-        request = $.get(`/ajax/events/${eventId}/students/search/${query}`);
+        request = $.get(`/ajax/events/${eventId}/attendances/${attendanceId}/students/search/${query}`);
 
         request.done(function (response) {
             console.log(response)
@@ -395,16 +401,19 @@
 
         const url = window.location.href;
 
-        // Use a regular expression to match the number between the last two slashes
-        const match = url.match(/\/(\d+)\/[^/]*$/);
+        // Split the URL at the slash characters
+        const parts = url.split("/");
 
-        // Extract the number from the first capturing group of the match
-        const eventId = match && match[1];
+        // Extract the event ID and attendance ID from the URL
+        console.log(parts)
+        const eventId = parts[4];
+        const attendanceId = parts[6];
 
-        console.log(eventId); // Output: "2"
+        console.log(eventId); // Output: "123"
+        console.log(attendanceId); // Output: "456"
 
         // fetch students list
-        request = $.get(`/ajax/events/${eventId}/students/search/${query}`);
+        request = $.get(`/ajax/events/${eventId}/attendances/${attendanceId}/students/search/${query}`);
 
         request.done(function (response) {
             console.log(response)
@@ -470,13 +479,17 @@
 
         const url = window.location.href;
 
-        // Use a regular expression to match the number between the last two slashes
-        const match = url.match(/\/(\d+)\/[^/]*$/);
+        // Split the URL at the slash characters
+        const parts = url.split("/");
 
-        // Extract the number from the first capturing group of the match
-        const eventId = match && match[1];
+        // Extract the event ID and attendance ID from the URL
+        const eventId = parts[4];
+        const attendanceId = parts[6];
 
-        var jqxhr = $.post(`/ajax/events/${eventId}/logs/store/byStudentId`, {
+        console.log(eventId); // Output: "123"
+        console.log(attendanceId); // Output: "456"
+
+        var jqxhr = $.post(`/ajax/events/${eventId}/attendances/${attendanceId}/logs/store/byStudentId`, {
             _token: "{{ csrf_token() }}",
             student_id: studentId
         });
