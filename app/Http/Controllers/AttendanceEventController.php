@@ -48,6 +48,21 @@ class AttendanceEventController extends Controller
         ]);
     }
 
+    public function scan(Event $event, AttendanceEvent $attendance)
+    {
+        if($attendance->status == 'closed')
+            return redirect()->route('events.show', $event->id)->with('error', 'Event is closed.');
+
+        // Get event log count for current $event->status
+        $logCount = $attendance->logs()->where('status', $attendance->status)->count();
+        $studentCount = Student::count();
+
+        return view('events.attendances.scan', [
+            'attendance' => $attendance,
+            'log_count'=> $logCount,
+            'student_count' => $studentCount
+        ]);
+    }
 
     public function store(StoreAttendanceEventRequest $request, Event $event)
     {

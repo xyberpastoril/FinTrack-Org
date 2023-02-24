@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests\EventLog;
+namespace App\Http\Requests\AttendanceEventLog;
 
 use App\Models\Student;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class StoreEventLogByStudentIdRequest extends FormRequest
+class StoreAttendanceEventLogByStudentIdRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
