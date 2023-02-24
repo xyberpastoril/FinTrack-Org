@@ -1,6 +1,6 @@
-# [Playground] - QR Attendance Management System
+# FinTrack
 
-A one-day speedrun web project implementing the Attendance Management System in Laravel 10. It consists of critical features that allow admins to manage users that checks for attendance, events, degree programs (import only), and students (import only).
+A work-in-progress demo web project implementing a QR Attendance and Finance Management System for university organizations using Laravel 10. It allow organization officers to seamlessly manage their organization's financial status.
 
 ## Requirements
 - PHP Version = 8.1
@@ -9,12 +9,12 @@ A one-day speedrun web project implementing the Attendance Management System in 
 ## Setup Instructions
 ### 1. Clone GitHub repo for this project locally.
 ```
-git clone https://github.com/xyberpastoril/playground-qrams.git
+git clone https://github.com/xyberpastoril/FinTrack.git
 ```
 
-### 2. `cd` into the `playground-qrams` project.
+### 2. `cd` into the `FinTrack` project.
 ```
-cd playground-qrams
+cd FinTrack
 ```
 
 ### 3. Install Composer Packages required for this project.
@@ -23,7 +23,7 @@ composer install
 ```
 
 ### 4. Create a copy of `.env` file from `.env.example`. 
-The `.env.example` file is already filled with default database information including the name of the database `helpinghand`.
+The `.env.example` file is already filled with default database information including the name of the database `fintrack`.
 ```
 cp .env.example .env
 ```
@@ -33,7 +33,7 @@ cp .env.example .env
 php artisan key:generate
 ```
 
-### 6. Create an empty database named `playground-qrams`.
+### 6. Create an empty database named `fintrack`.
 This can be done by opening XAMPP, run Apache and MySQL, then create a database to phpMyAdmin.
 
 ### 7. Update `.env` values when necessary (Optional)
