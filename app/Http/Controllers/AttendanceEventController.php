@@ -12,6 +12,42 @@ use Illuminate\Support\Facades\DB;
 
 class AttendanceEventController extends Controller
 {
+    public function show(Event $event, AttendanceEvent $attendance)
+    {
+        $logs = Student::select(
+                'students.id',
+                'students.id_number',
+                'students.first_name',
+                'students.last_name',
+                'enrolled_students.year_level',
+                'degree_programs.abbr',
+                DB::raw('IF(timein_events.id IS NOT NULL, "1", "0") as time_in'),
+                DB::raw('IF(timeout_events.id IS NOT NULL, "1", "0") as time_out'),
+            )
+            ->leftJoin('enrolled_students', 'students.id', '=', 'enrolled_students.student_id')
+            ->where('enrolled_students.semester_id', '=', $event->semester_id)
+            ->leftJoin('degree_programs', 'enrolled_students.degree_program_id', '=', 'degree_programs.id')
+            // left join event_logs where event_id = $this->event->id and status = $this->event->status = 'timein'
+            ->leftJoin('attendance_event_logs as timein_events', function($join) use ($attendance){
+                $join->on('enrolled_students.id', '=', 'timein_events.enrolled_student_id')
+                    ->where('timein_events.status', '=', 'timein')
+                    ->where('timein_events.attendance_event_id', '=', $attendance->id);
+            })
+            // left join event_logs where event_id = $this->event->id and status = $this->event->status = 'timeout'
+            ->leftJoin('attendance_event_logs as timeout_events', function($join) use ($attendance){
+                $join->on('enrolled_students.id', '=', 'timeout_events.enrolled_student_id')
+                    ->where('timeout_events.status', '=', 'timeout')
+                    ->where('timeout_events.attendance_event_id', '=', $attendance->id);
+            })
+            ->get();
+
+        return view('events.attendances.show', [
+            'event' => $event,
+            'attendance' => $attendance,
+            'logs' => $logs,
+        ]);
+    }
+
 
     public function store(StoreAttendanceEventRequest $request, Event $event)
     {

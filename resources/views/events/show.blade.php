@@ -54,6 +54,11 @@
                                     <td>
                                         <a href="{{ route('events.attendances.edit', ['event' => $event->id, 'attendance' => $attendanceEvent->id]) }}"
                                             class="btn btn-sm btn-secondary">Edit</a>
+                                        <form action="{{ route('events.attendances.logs.export', ['event' => $event->id, 'attendance' => $attendanceEvent->id]) }}" method="post"
+                                            style="display: inline-block">
+                                            @csrf
+                                            <button type="submit" class="btn btn-sm btn-secondary">Export Logs</button>
+                                        </form>
                                         {{-- <form action="{{ route('events.remove', [$event->id, $student->id]) }}" method="post"
                                             style="display: inline-block">
                                             @csrf
