@@ -14,6 +14,19 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class EventLogController extends Controller
 {
+    public function refreshCountAjax(Event $event)
+    {
+        // Get event log count for current $event->status
+        $logCount = $event->logs()->where('status', $event->status)->count();
+        $studentCount = Student::count();
+
+        return response()->json([
+            'event' => $event,
+            'log_count'=> $logCount,
+            'student_count' => $studentCount
+        ]);
+    }
+
     public function searchStudentAjax(Event $event, $query = null)
     {
         $students = Student::select(
@@ -57,12 +70,18 @@ class EventLogController extends Controller
             'logged_by_user_id' => Auth::id(),
         ]);
 
+        // Get event log count for current $event->status
+        $logCount = $event->logs()->where('status', $event->status)->count();
+        $studentCount = Student::count();
+
         return response()->json([
             'message' => 'Event log created successfully.',
             'student' => $request->student,
             'degree_program' => $request->student->degreeProgram,
             'log' => $log,
             'event' => $event,
+            'log_count'=> $logCount,
+            'student_count' => $studentCount
         ]);
     }
 
@@ -82,12 +101,18 @@ class EventLogController extends Controller
             'logged_by_user_id' => Auth::id(),
         ]);
 
+        // Get event log count for current $event->status
+        $logCount = $event->logs()->where('status', $event->status)->count();
+        $studentCount = Student::count();
+
         return response()->json([
             'message' => 'Event log created successfully.',
             'student' => $request->student,
             'degree_program' => $request->student->degreeProgram,
             'log' => $log,
             'event' => $event,
+            'log_count'=> $logCount,
+            'student_count' => $studentCount
         ]);
     }
 
