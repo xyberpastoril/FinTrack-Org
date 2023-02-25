@@ -173,6 +173,13 @@ Route::group([
             });
 
             Route::group([
+                'prefix' => 'items',
+                'as' => 'items.',
+            ], function() {
+                Route::get('/search/{query?}', [App\Http\Controllers\ItemController::class, 'searchAjax'])->name('search');
+            });
+
+            Route::group([
                 'prefix' => 'events/{event}',
                 'as' => 'event.',
             ], function(){

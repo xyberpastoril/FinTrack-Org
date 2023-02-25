@@ -19,53 +19,83 @@
                                     </select>
                                 </div>
 
-                                <label>Required Fees</label>
-                                <div class="table-responsive">
-                                    <table class="table table-striped table-bordered">
-                                        <thead>
-                                            <th>Fee</th>
-                                            <th class="text-end">Amount</th>
-                                            <th width="50px">Action</th>
-                                        </thead>
-                                        <tbody id="fees_list">
-                                            <tr>
-                                                <td colspan="3" class="text-center">No student selected ...</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
+                                <ul class="nav nav-tabs" id="payable-tabs" role="tablist">
+                                    <li class="nav-item" role="presentation">
+                                      <button class="nav-link active" id="required-fees-tab" data-bs-toggle="tab" data-bs-target="#required-fees" type="button" role="tab" aria-controls="required-fees" aria-selected="true">Required Fees</button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                      <button class="nav-link" id="optional-items-tab" data-bs-toggle="tab" data-bs-target="#optional-items" type="button" role="tab" aria-controls="optional-items" aria-selected="false">Optional Items</button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                      <button class="nav-link" id="fines-tab" data-bs-toggle="tab" data-bs-target="#fines" type="button" role="tab" aria-controls="fines" aria-selected="false">Attendance Fines</button>
+                                    </li>
+                                  </ul>
+                                  <div class="tab-content" id="myTabContent">
+                                    <div class="tab-pane fade show active" id="required-fees" role="tabpanel" aria-labelledby="required-fees-tab">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-bordered">
+                                                <thead>
+                                                    <th>Fee</th>
+                                                    <th class="text-end">Amount</th>
+                                                    <th width="50px">Action</th>
+                                                </thead>
+                                                <tbody id="fees_list">
+                                                    <tr>
+                                                        <td colspan="3" class="text-center">No student selected ...</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="optional-items" role="tabpanel" aria-labelledby="optional-items-tab">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-bordered">
+                                                <thead>
+                                                    <th>Item</th>
+                                                    <th class="text-end">Amount</th>
+                                                    <th width="50px">Action</th>
+                                                </thead>
+                                                <tbody id="items_list">
+                                                    <tr>
+                                                        <td colspan="3" class="text-center">No student selected ...</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="fines" role="tabpanel" aria-labelledby="fines-tab">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-bordered">
+                                                <thead>
+                                                    <th>Attendance Event</th>
+                                                    <th class="text-end">Amount</th>
+                                                    <th width="50px">Action</th>
+                                                </thead>
+                                                <tbody id="fines_list">
+                                                    {{-- <tr>
+                                                        <td>First General Assembly</td>
+                                                        <td>Time-In</td>
+                                                        <td class="text-end">20.00</td>
+                                                        <td>
+                                                            <button class="btn btn-sm btn-success" disabled>Paid</button>
 
-                                <label>Attendance Fines</label>
-                                <div class="table-responsive">
-                                    <table class="table table-striped table-bordered">
-                                        <thead>
-                                            <th>Attendance Event</th>
-                                            <th class="text-end">Amount</th>
-                                            <th width="50px">Action</th>
-                                        </thead>
-                                        <tbody id="fines_list">
-                                            {{-- <tr>
-                                                <td>First General Assembly</td>
-                                                <td>Time-In</td>
-                                                <td class="text-end">20.00</td>
-                                                <td>
-                                                    <button class="btn btn-sm btn-success" disabled>Paid</button>
-
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>First General Assembly</td>
-                                                <td>Time-Out</td>
-                                                <td class="text-end">20.00</td>
-                                                <td>
-                                                    <button class="btn btn-sm btn-primary">Pay</button>
-                                                </td>
-                                            </tr> --}}
-                                            <tr>
-                                                <td colspan="4" class="text-center">No student selected ...</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>First General Assembly</td>
+                                                        <td>Time-Out</td>
+                                                        <td class="text-end">20.00</td>
+                                                        <td>
+                                                            <button class="btn btn-sm btn-primary">Pay</button>
+                                                        </td>
+                                                    </tr> --}}
+                                                    <tr>
+                                                        <td colspan="4" class="text-center">No student selected ...</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-12 col-md-6">
@@ -194,7 +224,8 @@
         transaction_items = [],
         amount_received = 0,
         amount_change = 0,
-        total_amount = 0;
+        total_amount = 0,
+        transaction_item_number = 1;
 
     const element = document.getElementById('enrolled_student_id'),
         singleXhrRemove = new Choices(element, {
@@ -253,17 +284,60 @@
                     var fees_list = document.getElementById("fees_list");
                     fees_list.innerHTML = "";
 
-                    data.forEach(function(fee){
+                    if(data.length > 0) {
+                        data.forEach(function(fee){
+                            var tr = document.createElement("tr");
+                            tr.innerHTML = `
+                                <td>${fee.name}</td>
+                                <td class="text-end">${parseFloat(fee.amount).toFixed(2)}</td>
+                                <td>
+                                    ${fee.is_paid ? `<button type="button" class="btn btn-sm btn-success" disabled>Paid</button>` : `<button type="button" class="btn btn-sm btn-primary" data-id="${fee.id}" data-name="${fee.name}" data-amount="${fee.amount}" data-action="pay-fee">Pay</button>`}
+                                </td>
+                            `;
+                            fees_list.appendChild(tr);
+                        })
+                    }
+                    else {
                         var tr = document.createElement("tr");
                         tr.innerHTML = `
-                            <td>${fee.name}</td>
-                            <td class="text-end">${parseFloat(fee.amount).toFixed(2)}</td>
-                            <td>
-                                ${fee.is_paid ? `<button type="button" class="btn btn-sm btn-success" disabled>Paid</button>` : `<button type="button" class="btn btn-sm btn-primary" data-id="${fee.id}" data-name="${fee.name}" data-amount="${fee.amount}" data-action="pay-fee">Pay</button>`}
-                            </td>
+                            <td colspan="3" class="text-center">No fees to pay.</td>
                         `;
                         fees_list.appendChild(tr);
-                    })
+                    }
+                })
+
+                // fetch items data
+                fetch(`/ajax/items/search/`)
+                .then(function (res) {
+                    return res.json();
+                })
+                .then(function(data) {
+                    console.log(data);
+
+                    // populate items_list
+                    var items_list = document.getElementById("items_list");
+                    items_list.innerHTML = "";
+
+                    if(data.length > 0) {
+                        data.forEach(function(item){
+                            var tr = document.createElement("tr");
+                            tr.innerHTML = `
+                                <td>${item.name}</td>
+                                <td class="text-end">${parseFloat(item.amount).toFixed(2)}</td>
+                                <td>
+                                    <button type="button" class="btn btn-sm btn-primary" data-id="${item.id}" data-name="${item.name}" data-amount="${item.amount}" data-action="pay-item">Add</button>
+                                </td>
+                            `;
+                            items_list.appendChild(tr);
+                        })
+                    }
+                    else {
+                        var tr = document.createElement("tr");
+                        tr.innerHTML = `
+                            <td colspan="3" class="text-center">No items to add.</td>
+                        `;
+                        items_list.appendChild(tr);
+                    }
                 })
 
                 // fetch student fines' data
@@ -278,17 +352,26 @@
                     var fines_list = document.getElementById("fines_list");
                     fines_list.innerHTML = "";
 
-                    data.forEach(function(fine){
+                    if(data.length > 0) {
+                        data.forEach(function(fine){
+                            var tr = document.createElement("tr");
+                            tr.innerHTML = `
+                                <td>${fine.name}</td>
+                                <td class="text-end">${parseFloat(fine.amount).toFixed(2)}</td>
+                                <td>
+                                    ${fine.is_paid ? `<button type="button" class="btn btn-sm btn-success" disabled>Paid</button>` : `<button type="button" class="btn btn-sm btn-primary" data-id="${fine.id}" data-name="${fine.name}" data-amount="${fine.amount}" data-action="pay-fine">Pay</button>`}
+                                </td>
+                            `;
+                            fines_list.appendChild(tr);
+                        })
+                    }
+                    else {
                         var tr = document.createElement("tr");
                         tr.innerHTML = `
-                            <td>${fine.name}</td>
-                            <td class="text-end">${parseFloat(fine.amount).toFixed(2)}</td>
-                            <td>
-                                ${fine.is_paid ? `<button type="button" class="btn btn-sm btn-success" disabled>Paid</button>` : `<button type="button" class="btn btn-sm btn-primary" data-id="${fine.id}" data-name="${fine.name}" data-amount="${fine.amount}" data-action="pay-fine">Pay</button>`}
-                            </td>
+                            <td colspan="3" class="text-center">This student is in good standing.</td>
                         `;
                         fines_list.appendChild(tr);
-                    })
+                    }
                 })
             }
             else {
@@ -300,6 +383,14 @@
                 // populate fees_list
                 var fees_list = document.getElementById("fees_list");
                 fees_list.innerHTML = `
+                    <tr>
+                        <td colspan="3" class="text-center">No student selected ...</td>
+                    </tr>
+                `;
+
+                // populate items_list
+                var items_list = document.getElementById("items_list");
+                items_list.innerHTML = `
                     <tr>
                         <td colspan="3" class="text-center">No student selected ...</td>
                     </tr>
@@ -320,23 +411,28 @@
     document.addEventListener('click', function(event){
         console.log("Event: Click");
         console.log(event);
-        if(event.target.dataset.action == 'pay-fee' || event.target.dataset.action == 'pay-fine') {
-            console.log("pay-fee")
+        if(event.target.dataset.action == 'pay-fee' || event.target.dataset.action == 'pay-fine' || event.target.dataset.action == 'pay-item') {
             console.log(event.target.dataset)
 
             // add to transaction items
             transaction_items.push({
+                number: transaction_item_number,
                 foreign_key_id: event.target.dataset.id,
                 description: event.target.dataset.name,
                 category: event.target.dataset.action.substring(4),
                 amount: event.target.dataset.amount,
             });
 
-            // set the button to disabled, change the text to selected, remove bg-primary, and add bg-success
-            event.target.disabled = true;
-            event.target.innerHTML = "Selected";
-            event.target.classList.remove("btn-primary");
-            event.target.classList.add("btn-success");
+            transaction_item_number++;
+
+            // if !pay-item, then disable the button
+            if(event.target.dataset.action != 'pay-item') {
+                // set the button to disabled, change the text to selected, remove bg-primary, and add bg-success
+                event.target.disabled = true;
+                event.target.innerHTML = "Selected";
+                event.target.classList.remove("btn-primary");
+                event.target.classList.add("btn-success");
+            }
 
             // populate pending transactions
             populatePendingTransactions();
@@ -347,22 +443,24 @@
 
             // remove from transaction items by filtering out the foreign_key_id where category is equal to the category of the button
             transaction_items = transaction_items.filter(function(transaction_item){
-                return !(transaction_item.foreign_key_id == event.target.dataset.id && transaction_item.category == event.target.dataset.category);
+                return !(transaction_item.number == event.target.dataset.number);
             });
 
             // remove tr
             event.target.parentElement.parentElement.remove();
 
             // reset the button to enabled, change the text to pay, remove bg-success, and add bg-primary
-            var pay_buttons = document.querySelectorAll(`[data-action="pay-${event.target.dataset.category}"]`);
-            pay_buttons.forEach(function(pay_button){
-                if(pay_button.dataset.id == event.target.dataset.id) {
-                    pay_button.disabled = false;
-                    pay_button.innerHTML = "Pay";
-                    pay_button.classList.remove("btn-success");
-                    pay_button.classList.add("btn-primary");
-                }
-            });
+            if(event.target.dataset.category == 'fee' || event.target.dataset.category == 'fine') {
+                var pay_buttons = document.querySelectorAll(`[data-action="pay-${event.target.dataset.category}"]`);
+                pay_buttons.forEach(function(pay_button){
+                    if(pay_button.dataset.id == event.target.dataset.id) {
+                        pay_button.disabled = false;
+                        pay_button.innerHTML = "Pay";
+                        pay_button.classList.remove("btn-success");
+                        pay_button.classList.add("btn-primary");
+                    }
+                });
+            }
 
             // populate pending transactions
             populatePendingTransactions();
@@ -396,7 +494,7 @@
                 <td class="text-end">${capitalizeFirstLetter(transaction_item.category)}</td>
                 <td class="text-end">${parseFloat(transaction_item.amount).toFixed(2)}</td>
                 <td>
-                    <button type="button" class="btn btn-sm btn-danger" data-id="${transaction_item.foreign_key_id}" data-category="${transaction_item.category}" data-action="remove-transaction-item">Remove</button>
+                    <button type="button" class="btn btn-sm btn-danger" data-id="${transaction_item.foreign_key_id}" data-category="${transaction_item.category}" data-action="remove-transaction-item" data-number="${transaction_item.number}">Remove</button>
                 </td>
             `;
             pending_transactions_list.appendChild(tr);
