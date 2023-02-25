@@ -72,6 +72,8 @@ class EnrolledStudentController extends Controller
         ->leftJoin('transactions', 'fees.id', '=', 'transactions.foreign_key_id')
         ->leftJoin('receipts', 'transactions.receipt_id', '=', 'receipts.id')
         ->where('transactions.category', 'fee')
+        ->where('fees.is_required', true)
+        ->where('fees.semester_id', session('semester')->id)
         ->where('receipts.enrolled_student_id', $enrollee->id);
 
         return Fee::select(
@@ -81,7 +83,10 @@ class EnrolledStudentController extends Controller
             DB::raw('IF(sub_fees.transaction_id IS NULL, 0, 1) as is_paid')
         )->leftJoinSub($sub, 'sub_fees', function($join) {
             $join->on('fees.id', '=', 'sub_fees.id');
-        })->get();
+        })
+        ->where('fees.semester_id', session('semester')->id)
+        ->where('fees.is_required', true)
+        ->get();
     }
 
     public function getFinesAjax(EnrolledStudent $enrollee)
@@ -108,7 +113,9 @@ class EnrolledStudentController extends Controller
             "attendance_events.required_logs",
             "attendance_events.fines_amount_per_log",
             DB::raw('IFNULL(sub_log_count.log_count, 0) as log_count'),
-            DB::raw('IF(sub_transactions.transaction_id IS NULL, 0, 1) as is_paid')
+            DB::raw('IF(sub_transactions.transaction_id IS NULL, 0, 1) as is_paid'),
+            // calculate amount
+            DB::raw('fines_amount_per_log * (required_logs - IFNULL(sub_log_count.log_count, 0) - 1) as amount')
         )
         // sub log count
         ->leftJoinSub($subLogCount, 'sub_log_count', function($join) {
@@ -121,13 +128,10 @@ class EnrolledStudentController extends Controller
         ->leftJoin('events', 'attendance_events.event_id', '=', 'events.id')
         ->where('events.semester_id', session('semester')->id)
         ->where('attendance_events.required_logs', '!=', '0')
+        ->where('attendance_events.fines_amount_per_log', '!=', '0')
+        ->where(DB::raw('fines_amount_per_log * (required_logs - IFNULL(sub_log_count.log_count, 0) - 1)'), '!=', '0')
         ->get();
 
-        $main = $main->map(function($attendanceEvent) {
-            // amount = fines_amount_per_log * (required_logs - log_count)
-            $attendanceEvent->amount = $attendanceEvent->fines_amount_per_log * ($attendanceEvent->required_logs - $attendanceEvent->log_count);
-            return $attendanceEvent;
-        });
 
         return $main;
     }
