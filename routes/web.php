@@ -41,7 +41,7 @@ Route::group([
     Route::group([
         'prefix' => 'users',
         'as' => 'users.',
-        'middleware' => 'admin',
+        'middleware' => ['admin', 'semester'],
     ], function(){
         Route::get('/', [App\Http\Controllers\UserController::class, 'index'])->name('index');
         Route::get('/create', [App\Http\Controllers\UserController::class, 'create'])->name('create');
@@ -56,7 +56,7 @@ Route::group([
     Route::group([
         'prefix' => 'degree-programs',
         'as' => 'degreePrograms.',
-        'middleware' => 'admin',
+        'middleware' => ['admin', 'semester'],
     ], function(){
         Route::get('/', [App\Http\Controllers\DegreeProgramController::class, 'index'])->name('index');
         Route::post('/import', [App\Http\Controllers\DegreeProgramController::class, 'import'])->name('import');
@@ -66,7 +66,7 @@ Route::group([
     Route::group([
         'prefix' => 'students',
         'as' => 'students.',
-        'middleware' => 'admin',
+        'middleware' => ['admin', 'semester'],
     ], function(){
 
         Route::group([
@@ -82,6 +82,7 @@ Route::group([
     Route::group([
         'prefix' => 'events',
         'as' => 'events.',
+        'middleware' => ['semester'],
     ], function(){
         Route::get('/', [App\Http\Controllers\EventController::class, 'index'])->name('index');
         Route::post('/', [App\Http\Controllers\EventController::class, 'store'])->name('store')->middleware('admin');
@@ -115,6 +116,7 @@ Route::group([
     Route::group([
         'prefix' => 'ajax',
         'as' => 'ajax.',
+        'middleware' => ['admin', 'semester'],
     ], function(){
 
         Route::group([
