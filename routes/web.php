@@ -127,6 +127,20 @@ Route::group([
             Route::delete('/{fee}', [App\Http\Controllers\FeeController::class, 'destroy'])->name('destroy');
         });
 
+        // Fees
+        Route::group([
+            'prefix' => 'items',
+            'as' => 'items.',
+            'middleware' => ['admin'],
+        ], function(){
+            Route::get('/', [App\Http\Controllers\ItemController::class, 'index'])->name('index');
+            Route::post('/', [App\Http\Controllers\ItemController::class, 'store'])->name('store');
+            // Route::get('/{item}', [App\Http\Controllers\ItemController::class, 'show'])->name('show');
+            Route::get('/{item}/edit', [App\Http\Controllers\ItemController::class, 'edit'])->name('edit');
+            Route::put('/{item}', [App\Http\Controllers\ItemController::class, 'update'])->name('update');
+            Route::delete('/{item}', [App\Http\Controllers\ItemController::class, 'destroy'])->name('destroy');
+        });
+
         // Payment
         Route::group([
             'prefix' => 'payment',
