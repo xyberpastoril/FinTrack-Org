@@ -13,7 +13,7 @@ class EnrolledStudentController extends Controller
 {
     public function index()
     {
-        $students = EnrolledStudent::where('semester_id', 1)->get();
+        $students = EnrolledStudent::where('semester_id', session('semester')->id)->get();
         return view('students.enrolled.index', compact('students'));
     }
 
