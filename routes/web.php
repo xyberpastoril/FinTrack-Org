@@ -144,6 +144,7 @@ Route::group([
                     'as' => 'enrolled.',
                 ], function(){
                     Route::get('/search/{query?}', [App\Http\Controllers\EnrolledStudentController::class, 'searchAjax'])->name('search');
+                    Route::get('/{enrollee}/fees', [App\Http\Controllers\EnrolledStudentController::class, 'getFeesAjax'])->name('getFees');
                 });
             });
 

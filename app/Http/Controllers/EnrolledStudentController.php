@@ -7,6 +7,7 @@ use App\Http\Requests\Student\ImportStudentsRequest;
 use App\Models\Student;
 use App\Imports\StudentsImport;
 use App\Models\EnrolledStudent;
+use App\Models\Fee;
 use Maatwebsite\Excel\Facades\Excel;
 
 class EnrolledStudentController extends Controller
@@ -54,6 +55,29 @@ class EnrolledStudentController extends Controller
         });
 
         return response()->json($students);
+    }
+
+    public function getFeesAjax(EnrolledStudent $enrollee)
+    {
+        $sub = Fee::select(
+            'fees.id',
+            'fees.name',
+            'fees.amount',
+            'transactions.id as transaction_id',
+        )
+        ->leftJoin('transactions', 'fees.id', '=', 'transactions.foreign_key_id')
+        ->leftJoin('receipts', 'transactions.receipt_id', '=', 'receipts.id')
+        ->where('transactions.category', 'fee')
+        ->where('receipts.enrolled_student_id', $enrollee->id);
+
+        return Fee::select(
+            'fees.id',
+            'fees.name',
+            'fees.amount',
+            DB::raw('IF(sub_fees.transaction_id IS NULL, 0, 1) as is_paid')
+        )->leftJoinSub($sub, 'sub_fees', function($join) {
+            $join->on('fees.id', '=', 'sub_fees.id');
+        })->get();
     }
 
 }
