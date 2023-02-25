@@ -127,6 +127,15 @@ Route::group([
             Route::delete('/{fee}', [App\Http\Controllers\FeeController::class, 'destroy'])->name('destroy');
         });
 
+        // Payment
+        Route::group([
+            'prefix' => 'payment',
+            'as' => 'payment.',
+            'middleware' => ['admin'],
+        ], function(){
+            Route::get('/', [App\Http\Controllers\PaymentController::class, 'index'])->name('index');
+        });
+
         // AJAX
         Route::group([
             'prefix' => 'ajax',
