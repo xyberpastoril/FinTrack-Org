@@ -188,7 +188,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="tender" action="" method="post">
+                <div id="tender">
                     @csrf
                     <div class="row mb-3">
                         <label for="total_amount" class="col-sm-4 col-form-label">Total Amount</label>
@@ -209,11 +209,29 @@
                         </div>
                     </div>
 
-                </form>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" form="tender" class="btn btn-primary">Issue Receipt</button>
+                <button type="button" data-action="issue-receipt" class="btn btn-primary">Issue Receipt</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="printReceiptModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="printReceiptModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="printReceiptModalLabel">Receipt</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <iframe id="receipt_iframe" src="" frameborder="0" width="100%" height="500px"></iframe>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -466,6 +484,92 @@
 
             // populate pending transactions
             populatePendingTransactions();
+        }
+        else if(event.target.dataset.action == 'issue-receipt') {
+            event.preventDefault();
+            console.log("Attempt to issue receipt ...")
+
+            // create form data
+            var form_data = new FormData();
+            // get the enrolled_student_id from the select
+            var enrolled_student_id = document.getElementById("enrolled_student_id").value;
+
+            // append enrolled_student_id
+            form_data.append("enrolled_student_id", enrolled_student_id);
+
+            // append transaction_items
+            form_data.append("transaction_items", JSON.stringify(transaction_items));
+
+            // append date
+            form_data.append("date", document.getElementById("date").value);
+
+            // append csrf_token from meta[name='csrf-token']
+            form_data.append("_token", document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
+
+            // post to issue-receipt
+            fetch('/ajax/payments', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+                body: form_data,
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                if(data.success == true) {
+                    // clear transaction_items
+                    transaction_items = [];
+
+                    // clear pending transactions
+                    populatePendingTransactions();
+
+                    // clear active student item
+                    singleXhrRemove.removeActiveItems();
+
+                    // clear the date
+                    document.getElementById("date").value = "";
+
+                    // clear the fees_list
+                    var fees_list = document.getElementById("fees_list");
+                    fees_list.innerHTML = `
+                        <tr>
+                            <td colspan="3" class="text-center">No student selected ...</td>
+                        </tr>
+                    `;
+
+                    // clear the items_list
+                    var items_list = document.getElementById("items_list");
+                    items_list.innerHTML = `
+                        <tr>
+                            <td colspan="3" class="text-center">No student selected ...</td>
+                        </tr>
+                    `;
+
+                    // clear the fines_list
+                    var fines_list = document.getElementById("fines_list");
+                    fines_list.innerHTML = `
+                        <tr>
+                            <td colspan="3" class="text-center">No student selected ...</td>
+                        </tr>
+                    `;
+
+                    // prop to hide modal
+                    var myModalEl = document.getElementById('proceedTransactionModal')
+                    var modal = bootstrap.Modal.getInstance(myModalEl) // Returns a Bootstrap modal instance
+                    modal.hide()
+
+                    // prop to show printReceiptModal
+                    var modal2 = new bootstrap.Modal(document.getElementById('printReceiptModal'), {
+                        keyboard: false
+                    })
+                    modal2.show()
+
+                    // load iframe
+                    document.getElementById("receipt_iframe").src = `/receipts/${data.receipt.id}/pdf`;
+                }
+            });
         }
     });
 

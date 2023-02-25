@@ -150,12 +150,28 @@ Route::group([
             Route::get('/', [App\Http\Controllers\PaymentController::class, 'index'])->name('index');
         });
 
+        // Receipt
+        Route::group([
+            'prefix' => 'receipts',
+            'as' => 'receipts.',
+            'middleware' => ['admin'],
+        ], function(){
+            Route::get('/{receipt}/pdf', [App\Http\Controllers\ReceiptController::class, 'pdf'])->name('pdf');
+        });
+
         // AJAX
         Route::group([
             'prefix' => 'ajax',
             'as' => 'ajax.',
             'middleware' => ['admin'],
         ], function(){
+
+            Route::group([
+                'prefix' => 'payments',
+                'as' => 'payments.',
+            ], function(){
+                Route::post('/', [App\Http\Controllers\PaymentController::class, 'storeAjax'])->name('store');
+            });
 
             Route::group([
                 'prefix' => 'students',
