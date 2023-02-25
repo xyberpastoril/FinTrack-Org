@@ -135,6 +135,19 @@ Route::group([
         ], function(){
 
             Route::group([
+                'prefix' => 'students',
+                'as' => 'students.',
+            ], function(){
+
+                Route::group([
+                    'prefix' => 'enrolled',
+                    'as' => 'enrolled.',
+                ], function(){
+                    Route::get('/search/{query?}', [App\Http\Controllers\EnrolledStudentController::class, 'searchAjax'])->name('search');
+                });
+            });
+
+            Route::group([
                 'prefix' => 'events/{event}',
                 'as' => 'event.',
             ], function(){
