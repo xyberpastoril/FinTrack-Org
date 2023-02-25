@@ -27,8 +27,21 @@
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                    {{ config('app.name', 'FinTrack-Org') }}
                 </a>
+                @if(session('semester'))
+                    <p class="mt-0 pb-0 mb-0 d-none d-md-block">
+                        Current Semester:
+                        <strong>
+                            @if(session('semester')->semester == 1)
+                                First Semester,
+                            @elseif(session('semester')->semester == 2)
+                                Second Semester,
+                            @endif
+                            AY {{ session('semester')->year }} - {{ session('semester')->year + 1 }}
+                        </strong>
+                    </p>
+                @endif
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -59,7 +72,7 @@
                                 <a class="nav-link" href="{{ route('home') }}">{{ __('Home') }}</a>
                             </li>
 
-                            @if(Auth::user()->is_admin)
+                            @if(Auth::user()->is_admin && session('semester'))
                                 <li class="nav-item dropdown">
                                     <a id="navbarDropdown1" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                         Administration

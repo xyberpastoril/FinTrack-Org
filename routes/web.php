@@ -25,6 +25,7 @@ Route::group([
     'middleware' => 'auth',
 ], function() {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::post('/home', [App\Http\Controllers\HomeController::class, 'setSemester'])->name('home.setSemester');
 
     // Account
     Route::group([
