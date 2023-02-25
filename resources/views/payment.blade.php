@@ -479,6 +479,11 @@
                     <td colspan="4" class="text-center">No pending transactions ...</td>
                 </tr>
             `;
+        }
+
+        // if neither student is selected nor there are pending transactions, then disable the proceed transaction button
+        if(transaction_items.length == 0 || element.parentElement.childNodes[1].childNodes.length == 0)
+        {
             // disable btn
             document.getElementById("proceed_transaction_btn").disabled = true;
         }
