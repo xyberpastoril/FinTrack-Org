@@ -6,8 +6,12 @@ use Illuminate\Http\Request;
 use App\Http\Requests\Student\ImportStudentsRequest;
 use App\Models\Student;
 use App\Imports\StudentsImport;
+use App\Models\AttendanceEvent;
+use App\Models\AttendanceEventLog;
 use App\Models\EnrolledStudent;
 use App\Models\Fee;
+use App\Models\Transaction;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 
 class EnrolledStudentController extends Controller
@@ -80,4 +84,51 @@ class EnrolledStudentController extends Controller
         })->get();
     }
 
+    public function getFinesAjax(EnrolledStudent $enrollee)
+    {
+        // sub log count per attendance event and enrolled_student_id
+        $subLogCount = AttendanceEventLog::select(
+            'attendance_event_logs.attendance_event_id',
+            DB::raw('COUNT(attendance_event_logs.id) as log_count')
+        )
+        ->where('attendance_event_logs.enrolled_student_id', $enrollee->id)
+        ->groupBy('attendance_event_logs.attendance_event_id');
+
+        $subTransactions = Transaction::select(
+            "transactions.id as transaction_id",
+            "transactions.foreign_key_id as attendance_event_id",
+        )
+        ->leftJoin('receipts', 'transactions.receipt_id', '=', 'receipts.id')
+        ->where('transactions.category', 'fine')
+        ->where('receipts.enrolled_student_id', $enrollee->id);
+
+        $main = AttendanceEvent::select(
+            "attendance_events.id as attendance_event_id",
+            "attendance_events.name",
+            "attendance_events.required_logs",
+            "attendance_events.fines_amount_per_log",
+            DB::raw('IFNULL(sub_log_count.log_count, 0) as log_count'),
+            DB::raw('IF(sub_transactions.transaction_id IS NULL, 0, 1) as is_paid')
+        )
+        // sub log count
+        ->leftJoinSub($subLogCount, 'sub_log_count', function($join) {
+            $join->on('attendance_events.id', '=', 'sub_log_count.attendance_event_id');
+        })
+        // sub transactions
+        ->leftJoinSub($subTransactions, 'sub_transactions', function($join) {
+            $join->on('attendance_events.id', '=', 'sub_transactions.attendance_event_id');
+        })
+        ->leftJoin('events', 'attendance_events.event_id', '=', 'events.id')
+        ->where('events.semester_id', session('semester')->id)
+        ->where('attendance_events.required_logs', '!=', '0')
+        ->get();
+
+        $main = $main->map(function($attendanceEvent) {
+            // amount = fines_amount_per_log * (required_logs - log_count)
+            $attendanceEvent->amount = $attendanceEvent->fines_amount_per_log * ($attendanceEvent->required_logs - $attendanceEvent->log_count);
+            return $attendanceEvent;
+        });
+
+        return $main;
+    }
 }
