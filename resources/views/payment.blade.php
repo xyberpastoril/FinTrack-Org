@@ -374,36 +374,38 @@
                     }
                 })
             }
-            else {
-                // clear transaction_items
-                transaction_items = [];
-                populatePendingTransactions();
 
-                console.log("no choice")
-                // populate fees_list
-                var fees_list = document.getElementById("fees_list");
-                fees_list.innerHTML = `
-                    <tr>
-                        <td colspan="3" class="text-center">No student selected ...</td>
-                    </tr>
-                `;
+            // filter transaction_items that are fees and fines, then remove them
+            transaction_items = transaction_items.filter(function(item){
+                return item.category != "fee" && item.category != "fine";
+            });
 
-                // populate items_list
-                var items_list = document.getElementById("items_list");
-                items_list.innerHTML = `
-                    <tr>
-                        <td colspan="3" class="text-center">No student selected ...</td>
-                    </tr>
-                `;
+            populatePendingTransactions();
 
-                // populate fines_list
-                var fines_list = document.getElementById("fines_list");
-                fines_list.innerHTML = `
-                    <tr>
-                        <td colspan="3" class="text-center">No student selected ...</td>
-                    </tr>
-                `;
-            }
+            console.log("no choice")
+            // populate fees_list
+            var fees_list = document.getElementById("fees_list");
+            fees_list.innerHTML = `
+                <tr>
+                    <td colspan="3" class="text-center">No student selected ...</td>
+                </tr>
+            `;
+
+            // populate items_list
+            var items_list = document.getElementById("items_list");
+            items_list.innerHTML = `
+                <tr>
+                    <td colspan="3" class="text-center">No student selected ...</td>
+                </tr>
+            `;
+
+            // populate fines_list
+            var fines_list = document.getElementById("fines_list");
+            fines_list.innerHTML = `
+                <tr>
+                    <td colspan="3" class="text-center">No student selected ...</td>
+                </tr>
+            `;
         },
         false,
     );
@@ -489,9 +491,22 @@
 
         transaction_items.forEach(function(transaction_item){
             var tr = document.createElement("tr");
+
+            // set badge color
+            var badge_color = "";
+            if(transaction_item.category == "fee") {
+                badge_color = "bg-warning";
+            }
+            else if(transaction_item.category == "fine") {
+                badge_color = "bg-danger";
+            }
+            else if(transaction_item.category == "item") {
+                badge_color = "bg-primary";
+            }
+
             tr.innerHTML = `
                 <td>${transaction_item.description}</td>
-                <td class="text-end">${capitalizeFirstLetter(transaction_item.category)}</td>
+                <td><span class="badge ${badge_color}">${capitalizeFirstLetter(transaction_item.category)}</span></td>
                 <td class="text-end">${parseFloat(transaction_item.amount).toFixed(2)}</td>
                 <td>
                     <button type="button" class="btn btn-sm btn-danger" data-id="${transaction_item.foreign_key_id}" data-category="${transaction_item.category}" data-action="remove-transaction-item" data-number="${transaction_item.number}">Remove</button>
