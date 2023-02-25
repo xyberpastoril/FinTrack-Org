@@ -36,4 +36,9 @@ class Student extends Model
     {
         return $this->hasMany(EnrolledStudent::class);
     }
+
+    public function getName()
+    {
+        return $this->last_name . ', ' . $this->first_name;
+    }
 }
