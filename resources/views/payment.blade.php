@@ -528,8 +528,6 @@
                     // clear active student item
                     singleXhrRemove.removeActiveItems();
 
-                    // clear the date
-                    document.getElementById("date").value = "";
 
                     // clear the fees_list
                     var fees_list = document.getElementById("fees_list");
