@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('attendance_events', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('event_id');
-            $table->string('name');
+            $table->text('name');
             $table->date('date');
             $table->enum('status', ['closed', 'timein', 'timeout'])->default('closed');
             $table->enum('required_logs', ['0', '1', '2'])->default('2');
