@@ -28,7 +28,7 @@ class StudentsImport implements ToModel, WithHeadingRow
 
         EnrolledStudent::firstOrCreate([
             'student_id' => $student->id,
-            'semester_id' => 1,
+            'semester_id' => session('semester')->id,
         ], [
             'degree_program_id' => $row['degree_program_id'],
             'year_level' => $row['year_level'],

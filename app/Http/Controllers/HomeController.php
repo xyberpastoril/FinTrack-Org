@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Semester;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +24,33 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $semesters = Semester::all();
+
+        return view('home', [
+            'semesters' => $semesters,
+        ]);
+    }
+
+    public function setSemester(Request $request)
+    {
+        $semester = Semester::find($request->semester_id);
+
+        if (!$semester) {
+            return redirect()->route('home')->with('error', 'Semester not found');
+        }
+
+        session(['semester' => $semester]);
+
+        $successMessage = "Semester successfully set to ";
+
+        if($semester->semester = 1) {
+            $successMessage .= "First Semester ";
+        } else {
+            $successMessage .= "Second Semester ";
+        }
+
+        $successMessage .= $semester->year . " - " . ($semester->year + 1);
+
+        return redirect()->route('home')->with('success', $successMessage);
     }
 }

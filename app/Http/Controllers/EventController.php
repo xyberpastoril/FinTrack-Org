@@ -11,7 +11,7 @@ class EventController extends Controller
     public function index()
     {
         // get the events of the latest semester
-        $events = Event::where('semester_id', 1)->get();
+        $events = Event::where('semester_id', session('semester')->id)->get();
 
         return view('events.index', compact('events'));
     }
@@ -31,7 +31,7 @@ class EventController extends Controller
             'name' => $validated['name'],
             'date_from' => $validated['date_from'],
             'date_to' => $validated['date_to'],
-            'semester_id' => 1,
+            'semester_id' => session('semester')->id,
         ]);
 
         return redirect()->route('events.index')->with('success', 'Event created successfully.');
