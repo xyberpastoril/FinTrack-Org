@@ -115,7 +115,7 @@ class EnrolledStudentController extends Controller
             DB::raw('IFNULL(sub_log_count.log_count, 0) as log_count'),
             DB::raw('IF(sub_transactions.transaction_id IS NULL, 0, 1) as is_paid'),
             // calculate amount
-            DB::raw('fines_amount_per_log * (required_logs - IFNULL(sub_log_count.log_count, 0) - 1) as amount')
+            DB::raw('fines_amount_per_log * (required_logs - IFNULL(sub_log_count.log_count, 0)) as amount')
         )
         // sub log count
         ->leftJoinSub($subLogCount, 'sub_log_count', function($join) {
@@ -129,7 +129,7 @@ class EnrolledStudentController extends Controller
         ->where('events.semester_id', session('semester')->id)
         ->where('attendance_events.required_logs', '!=', '0')
         ->where('attendance_events.fines_amount_per_log', '!=', '0')
-        ->where(DB::raw('fines_amount_per_log * (required_logs - IFNULL(sub_log_count.log_count, 0) - 1)'), '!=', '0')
+        ->where(DB::raw('fines_amount_per_log * (required_logs - IFNULL(sub_log_count.log_count, 0))'), '!=', '0')
         ->get();
 
 

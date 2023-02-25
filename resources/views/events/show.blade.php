@@ -42,11 +42,11 @@
                                         @endif
                                     </td>
                                     <td>
-                                        @if($attendanceEvent->required_logs == '0')
+                                        @if($attendanceEvent->required_logs == 0)
                                             <span class="badge bg-success">0</span>
-                                        @elseif($attendanceEvent->required_logs == '1')
+                                        @elseif($attendanceEvent->required_logs == 1)
                                             <span class="badge bg-warning">1</span>
-                                        @elseif($attendanceEvent->required_logs == '2')
+                                        @elseif($attendanceEvent->required_logs == 2)
                                             <span class="badge bg-danger">2</span>
                                         @endif
                                     </td>
