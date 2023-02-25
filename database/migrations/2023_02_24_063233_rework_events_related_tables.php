@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text('name');
             $table->date('date');
             $table->enum('status', ['closed', 'timein', 'timeout'])->default('closed');
-            $table->enum('required_logs', ['0', '1', '2'])->default('2');
+            $table->tinyInteger('required_logs')->default(2);
             $table->decimal('fines_amount_per_log', 18, 8);
             $table->timestamps();
 
