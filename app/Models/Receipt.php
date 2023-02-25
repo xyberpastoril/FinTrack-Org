@@ -14,4 +14,14 @@ class Receipt extends Model
         'date',
         'logged_by_user_id',
     ];
+
+    public function enrolledStudent()
+    {
+        return $this->belongsTo(EnrolledStudent::class);
+    }
+
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
+    }
 }
