@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use ESolution\DBEncryption\Traits\EncryptedAttribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class AttendanceEvent extends Model
 {
-    use HasFactory;
+    use HasFactory, EncryptedAttribute;
 
     protected $fillable = [
         'event_id',
