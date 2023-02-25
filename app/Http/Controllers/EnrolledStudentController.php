@@ -108,7 +108,7 @@ class EnrolledStudentController extends Controller
         ->where('receipts.enrolled_student_id', $enrollee->id);
 
         $main = AttendanceEvent::select(
-            "attendance_events.id as attendance_event_id",
+            "attendance_events.id",
             "attendance_events.name",
             "attendance_events.required_logs",
             "attendance_events.fines_amount_per_log",
