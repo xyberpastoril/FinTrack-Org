@@ -60,24 +60,22 @@
                             </li>
 
                             @if(Auth::user()->is_admin)
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('users.index') }}">{{ __('Users') }}</a>
+                                <li class="nav-item dropdown">
+                                    <a id="navbarDropdown1" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                        Administration
+                                    </a>
 
-                                </li>
+                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown1">
+                                        <a class="dropdown-item" href="{{ route('users.index') }}">{{ __('Users') }}</a>
 
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('degreePrograms.index') }}">{{ __('Degree Programs') }}</a>
+                                        <a class="dropdown-item" href="{{ route('degreePrograms.index') }}">{{ __('Degree Programs') }}</a>
 
-                                </li>
+                                        <a class="dropdown-item" href="{{ route('students.enrolled.index') }}">{{ __('Students') }}</a>
 
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('students.index') }}">{{ __('Students') }}</a>
+                                        <a class="dropdown-item" href="{{ route('events.index') }}">{{ __('Events') }}</a>
+                                    </div>
                                 </li>
                             @endif
-
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('events.index') }}">{{ __('Events') }}</a>
-                            </li>
 
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
