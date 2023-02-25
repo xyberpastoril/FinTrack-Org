@@ -18,7 +18,6 @@
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">Name</th>
-                                <th scope="col">Is Required</th>
                                 <th scope="col" class="text-end">Amount</th>
                                 <th scope="col">Actions</th>
                             </tr>
@@ -28,13 +27,6 @@
                             <tr>
                                 <th scope="row">{{ $fee->id }}</th>
                                 <td>{{ $fee->name }}</td>
-                                <td>
-                                    @if ($fee->is_required)
-                                        <span class="badge bg-danger">Yes</span>
-                                    @else
-                                        <span class="badge bg-success">No</span>
-                                    @endif
-                                </td>
                                 <td class="text-end">{{ number_format($fee->amount, 2) }}</td>
                                 <td>
                                     <a href="{{ route('fees.edit', $fee->id) }}"
@@ -75,13 +67,6 @@
                     <div class="mb-3">
                         <label for="date" class="form-label">Amount</label>
                         <input type="number" class="form-control" id="date" name="amount" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="date" class="form-label">Required?</label>
-                        <select class="form-select" aria-label="Default select example" name="is_required">
-                            <option value="1">Yes</option>
-                            <option value="0">No</option>
-                        </select>
                     </div>
                 </form>
             </div>

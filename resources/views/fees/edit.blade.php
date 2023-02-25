@@ -19,13 +19,6 @@
                             <label for="date" class="form-label">Amount</label>
                             <input type="number" class="form-control" id="date" name="amount" required value="{{ number_format($fee->amount, 2) }}">
                         </div>
-                        <div class="mb-3">
-                            <label for="date" class="form-label">Required?</label>
-                            <select class="form-select" aria-label="Default select example" name="is_required">
-                                <option value="1" @if($fee->is_required) selected @endif>Yes</option>
-                                <option value="0" @if(!$fee->is_required) selected @endif>No</option>
-                            </select>
-                        </div>
                     </form>
 
                     <button type="submit" form="update" class="btn btn-primary">Submit</button>

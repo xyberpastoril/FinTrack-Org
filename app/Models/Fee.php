@@ -14,7 +14,6 @@ class Fee extends Model
         'semester_id',
         'name',
         'amount',
-        'is_required',
     ];
 
     /**
