@@ -43,7 +43,7 @@ class HomeController extends Controller
 
         $successMessage = "Semester successfully set to ";
 
-        if($semester->semester = 1) {
+        if($semester->semester == 1) {
             $successMessage .= "First Semester ";
         } else {
             $successMessage .= "Second Semester ";
