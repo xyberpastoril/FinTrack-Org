@@ -164,12 +164,12 @@ Route::group([
         Route::group([
             'prefix' => 'ajax',
             'as' => 'ajax.',
-            'middleware' => ['admin'],
         ], function(){
 
             Route::group([
                 'prefix' => 'payments',
                 'as' => 'payments.',
+                'middleware' => ['admin'],
             ], function(){
                 Route::post('/', [App\Http\Controllers\PaymentController::class, 'storeAjax'])->name('store');
             });
@@ -182,6 +182,7 @@ Route::group([
                 Route::group([
                     'prefix' => 'enrolled',
                     'as' => 'enrolled.',
+                    'middleware' => ['admin'],
                 ], function(){
                     Route::get('/search/{query?}', [App\Http\Controllers\EnrolledStudentController::class, 'searchAjax'])->name('search');
                     Route::get('/{enrollee}/fees', [App\Http\Controllers\EnrolledStudentController::class, 'getFeesAjax'])->name('getFees');
@@ -192,6 +193,7 @@ Route::group([
             Route::group([
                 'prefix' => 'items',
                 'as' => 'items.',
+                'middleware' => ['admin'],
             ], function() {
                 Route::get('/search/{query?}', [App\Http\Controllers\ItemController::class, 'searchAjax'])->name('search');
             });
