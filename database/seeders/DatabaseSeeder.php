@@ -15,13 +15,8 @@ class DatabaseSeeder extends Seeder
         // Create User Accounts for Admin and User
         \App\Models\User::factory()->create([
             'name' => 'Admin',
-            'email' => 'admin@pg.qrams.dev',
+            'username' => 'admin',
             'is_admin' => true,
-        ]);
-
-        \App\Models\User::factory()->create([
-            'name' => 'User',
-            'email' => 'user@pg.qrams.dev',
         ]);
     }
 }
