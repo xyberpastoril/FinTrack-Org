@@ -35,6 +35,7 @@ class AttendanceEventLogController extends Controller
                 'enrolled_students.id',
                 'students.first_name',
                 'students.last_name',
+                'students.middle_name',
                 'enrolled_students.year_level',
                 'degree_programs.abbr',
                 'attendance_event_logs.id as log_id',
@@ -52,6 +53,7 @@ class AttendanceEventLogController extends Controller
             })->whereEncrypted('id_number', 'like', "%$query%")
             ->orWhereEncrypted('first_name', 'like', "%$query%")
             ->orWhereEncrypted('last_name', 'like', "%$query%")
+            ->orWhereEncrypted('middle_name', 'like', "%$query%")
             ->limit(10)
             ->get();
 

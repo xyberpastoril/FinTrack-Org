@@ -15,6 +15,7 @@
                                 <th scope="col">ID Number</th>
                                 <th scope="col">Last Name</th>
                                 <th scope="col">First Name</th>
+                                <th scope="col">Middle Name</th>
                                 <th scope="col">Degree Program</th>
                                 <th scope="col">Year Level</th>
                                 <th scope="col">Time In</th>
@@ -29,6 +30,7 @@
                                 <td>{{ $log->id_number }}</td>
                                 <td>{{ $log->last_name }}</td>
                                 <td>{{ $log->first_name }}</td>
+                                <td>{{ $log->middle_name }}</td>
                                 <td>{{ $log->abbr }}</td>
                                 <td>{{ $log->year_level }}</td>
                                 <td>
