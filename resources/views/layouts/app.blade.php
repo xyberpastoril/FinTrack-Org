@@ -77,7 +77,7 @@
                                 <a class="nav-link" href="{{ route('home') }}">{{ __('Home') }}</a>
                             </li>
 
-                            @if(Auth::user()->is_admin && session('semester'))
+                            @if(Auth::user()->is_admin == 1 && session('semester'))
                                 <li class="nav-item dropdown">
                                     <a id="navbarDropdown1" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                         Administration
@@ -88,9 +88,46 @@
 
                                         <a class="dropdown-item" href="{{ route('degreePrograms.index') }}">{{ __('Degree Programs') }}</a>
 
+                                        <a class="dropdown-item disabled" href="javascript:void(0)">{{ __('Semesters') }}</a>
+
                                         <a class="dropdown-item" href="{{ route('students.enrolled.index') }}">{{ __('Students') }}</a>
+                                    </div>
+                                </li>
+
+                                <li class="nav-item dropdown">
+                                    <a id="navbarDropdown1" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                        Organization
+                                    </a>
+
+                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown1">
+
+                                        <a class="dropdown-item disabled" href="javascript:void(0)">{{ __('Attendance') }}</a>
+
+                                        <a class="dropdown-item" href="{{ route('payment.index') }}">{{ __('Payment') }}</a>
+
+                                        <div class="dropdown-divider"></div>
 
                                         <a class="dropdown-item" href="{{ route('events.index') }}">{{ __('Events') }}</a>
+
+                                        <a class="dropdown-item" href="{{ route('fees.index') }}">{{ __('Fees') }}</a>
+
+                                        <a class="dropdown-item" href="{{ route('items.index') }}">{{ __('Items') }}</a>
+
+                                        <a class="dropdown-item disabled text-muted" href="javascript:void(0)">{{ __('Receipts') }}</a>
+
+                                        <a class="dropdown-item disabled text-muted" href="javascript:void(0)">{{ __('Reports') }}</a>
+                                    </div>
+                                </li>
+                            @elseif(Auth::user()->is_admin == 0 && session('semester'))
+                                <li class="nav-item dropdown">
+                                    <a id="navbarDropdown1" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                        Organization
+                                    </a>
+
+                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown1">
+                                        <a class="dropdown-item disabled" href="javascript:void(0)">{{ __('Attendance') }}</a>
+
+                                        <a class="dropdown-item disabled" href="javascript:void(0)">{{ __('Payment') }}</a>
                                     </div>
                                 </li>
                             @endif
