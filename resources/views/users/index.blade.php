@@ -18,7 +18,7 @@
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">Name</th>
-                                <th scope="col">Email</th>
+                                <th scope="col">Username</th>
                                 <th scope="col">Role</th>
                                 <th scope="col">Actions</th>
                             </tr>
@@ -28,7 +28,7 @@
                             <tr>
                                 <th scope="row">{{ $user->id }}</th>
                                 <td>{{ $user->name }}</td>
-                                <td>{{ $user->email }}</td>
+                                <td>{{ $user->username }}</td>
                                 <td>
                                     @if($user->is_admin == '0')
                                         <span class="badge bg-secondary">User</span>
@@ -73,8 +73,8 @@
                         <input type="text" class="form-control" id="name" name="name" required>
                     </div>
                     <div class="mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" required>
+                        <label for="username" class="form-label">Username</label>
+                        <input type="username" class="form-control" id="username" name="username" required>
                     </div>
                     <div class="mb-3">
                         <label for="is_admin" class="form-label">Role</label>

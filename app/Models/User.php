@@ -21,6 +21,8 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'username',
+        'position',
         'password',
         'is_admin',
     ];
@@ -51,6 +53,8 @@ class User extends Authenticatable
      */
     protected $encryptable = [
         'name',
+        'username',
+        'position',
     ];
 
     public function attendanceLogs()

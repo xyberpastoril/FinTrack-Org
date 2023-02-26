@@ -23,7 +23,7 @@ class UserController extends Controller
 
         User::create([
             'name' => $validated['name'],
-            'email' => $validated['email'],
+            'username' => $validated['username'],
             'is_admin' => $validated['is_admin'],
             'password' => Hash::make('password'),
         ]);
@@ -41,7 +41,7 @@ class UserController extends Controller
         $validated = $request->validated();
 
         $user->name = $validated['name'];
-        $user->email = $validated['email'];
+        $user->username = $validated['username'];
         $user->is_admin = $validated['is_admin'];
 
         $user->save();
