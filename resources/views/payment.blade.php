@@ -164,8 +164,7 @@
                                 <!-- buttons right -->
                                 <div class="d-flex justify-content-end">
                                     <!-- proceed transaction button that props up a modal -->
-                                    <button id="proceed_transaction_btn" type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                        data-bs-target="#proceedTransactionModal" disabled="true">
+                                    <button id="proceed_transaction_btn" type="button" class="btn btn-primary" data-action="proceed_transaction" disabled="true">
                                         Proceed Transaction
                                     </button>
                                 </div>
@@ -431,7 +430,39 @@
     document.addEventListener('click', function(event){
         console.log("Event: Click");
         console.log(event);
-        if(event.target.dataset.action == 'pay-fee' || event.target.dataset.action == 'pay-fine' || event.target.dataset.action == 'pay-item') {
+        if(event.target.dataset.action == 'proceed_transaction') {
+
+            // validate if date is empty
+            var date = document.getElementById("date");
+            date.classList.remove("border-danger");
+            // remove alerts
+            var alerts = document.querySelectorAll(".alert");
+            alerts.forEach(function(alert){
+                alert.remove();
+            })
+
+            if(date.value == "") {
+                date.classList.add("border-danger");
+                // create alert
+                var alert = document.createElement("div");
+                alert.classList.add("alert", "alert-danger", "alert-dismissible", "fade", "show", "mt-2");
+                alert.setAttribute("role", "alert");
+                alert.innerHTML = `
+                    <strong>Oops!</strong> Please select a date.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                `;
+                // add alert below date
+                date.parentNode.insertBefore(alert, date.nextSibling);
+            }
+            else {
+                // prop to show proceedTransactionModal
+                var modal2 = new bootstrap.Modal(document.getElementById('proceedTransactionModal'), {
+                    keyboard: false
+                })
+                modal2.show()
+            }
+        }
+        else if(event.target.dataset.action == 'pay-fee' || event.target.dataset.action == 'pay-fine' || event.target.dataset.action == 'pay-item') {
             console.log(event.target.dataset)
 
             // add to transaction items
