@@ -127,12 +127,73 @@ Route::group([
             Route::delete('/{fee}', [App\Http\Controllers\FeeController::class, 'destroy'])->name('destroy');
         });
 
+        // Fees
+        Route::group([
+            'prefix' => 'items',
+            'as' => 'items.',
+            'middleware' => ['admin'],
+        ], function(){
+            Route::get('/', [App\Http\Controllers\ItemController::class, 'index'])->name('index');
+            Route::post('/', [App\Http\Controllers\ItemController::class, 'store'])->name('store');
+            // Route::get('/{item}', [App\Http\Controllers\ItemController::class, 'show'])->name('show');
+            Route::get('/{item}/edit', [App\Http\Controllers\ItemController::class, 'edit'])->name('edit');
+            Route::put('/{item}', [App\Http\Controllers\ItemController::class, 'update'])->name('update');
+            Route::delete('/{item}', [App\Http\Controllers\ItemController::class, 'destroy'])->name('destroy');
+        });
+
+        // Payment
+        Route::group([
+            'prefix' => 'payment',
+            'as' => 'payment.',
+            'middleware' => ['admin'],
+        ], function(){
+            Route::get('/', [App\Http\Controllers\PaymentController::class, 'index'])->name('index');
+        });
+
+        // Receipt
+        Route::group([
+            'prefix' => 'receipts',
+            'as' => 'receipts.',
+            'middleware' => ['admin'],
+        ], function(){
+            Route::get('/{receipt}/pdf', [App\Http\Controllers\ReceiptController::class, 'pdf'])->name('pdf');
+        });
+
         // AJAX
         Route::group([
             'prefix' => 'ajax',
             'as' => 'ajax.',
             'middleware' => ['admin'],
         ], function(){
+
+            Route::group([
+                'prefix' => 'payments',
+                'as' => 'payments.',
+            ], function(){
+                Route::post('/', [App\Http\Controllers\PaymentController::class, 'storeAjax'])->name('store');
+            });
+
+            Route::group([
+                'prefix' => 'students',
+                'as' => 'students.',
+            ], function(){
+
+                Route::group([
+                    'prefix' => 'enrolled',
+                    'as' => 'enrolled.',
+                ], function(){
+                    Route::get('/search/{query?}', [App\Http\Controllers\EnrolledStudentController::class, 'searchAjax'])->name('search');
+                    Route::get('/{enrollee}/fees', [App\Http\Controllers\EnrolledStudentController::class, 'getFeesAjax'])->name('getFees');
+                    Route::get('/{enrollee}/fines', [App\Http\Controllers\EnrolledStudentController::class, 'getFinesAjax'])->name('getFines');
+                });
+            });
+
+            Route::group([
+                'prefix' => 'items',
+                'as' => 'items.',
+            ], function() {
+                Route::get('/search/{query?}', [App\Http\Controllers\ItemController::class, 'searchAjax'])->name('search');
+            });
 
             Route::group([
                 'prefix' => 'events/{event}',

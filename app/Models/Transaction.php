@@ -6,14 +6,20 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use ESolution\DBEncryption\Traits\EncryptedAttribute;
 
-class Fee extends Model
+class Transaction extends Model
 {
     use HasFactory, EncryptedAttribute;
 
     protected $fillable = [
         'semester_id',
-        'name',
+        'receipt_id',
+        'date',
+        'category',
+        'type',
+        'description',
         'amount',
+        'foreign_key_id',
+        'logged_by_user_id',
     ];
 
     /**
@@ -22,13 +28,6 @@ class Fee extends Model
      * @var array
      */
     protected $encryptable = [
-        'name',
+        'description',
     ];
-
-    public function semester()
-    {
-        return $this->belongsTo(Semester::class);
-    }
-
-
 }

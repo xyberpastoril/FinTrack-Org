@@ -24,7 +24,6 @@ class FeeController extends Controller
             'semester_id' => session('semester')->id,
             'name' => $validated['name'],
             'amount' => $validated['amount'],
-            'is_required' => $validated['is_required'],
         ]);
 
         return redirect()->route('fees.index')->with('success', 'Fee created successfully.');
@@ -42,7 +41,6 @@ class FeeController extends Controller
         $fee->update([
             'name' => $validated['name'],
             'amount' => $validated['amount'],
-            'is_required' => $validated['is_required'],
         ]);
 
         return redirect()->route('fees.index')->with('success', 'Fee updated successfully.');

@@ -25,7 +25,6 @@ class UpdateFeeRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'amount' => ['required', 'numeric', 'min:0'],
-            'is_required' => ['required', 'boolean'],
         ];
     }
 }

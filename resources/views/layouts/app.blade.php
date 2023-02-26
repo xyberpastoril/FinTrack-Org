@@ -16,10 +16,15 @@
     <!-- Assets -->
     <link rel="stylesheet" href="/assets/bootstrap-5.0.2-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assets/fontawesome-free-6.3.0-web/css/all.min.css">
+    <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/choices.js@9.0.1/public/assets/styles/choices.min.css"
+    />
 
     <script src="/assets/bootstrap-5.0.2-dist/js/bootstrap.bundle.min.js"></script>
     <script src="/assets/fontawesome-free-6.3.0-web/js/all.min.js"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/choices.js@9.0.1/public/assets/scripts/choices.min.js"></script>
     <!-- Scripts -->
 </head>
 <body>
@@ -35,7 +40,7 @@
                         <strong>
                             @if(session('semester')->semester == 1)
                                 First Semester,
-                            @elseif(session('semester')->semester == 2)
+                            @else
                                 Second Semester,
                             @endif
                             AY {{ session('semester')->year }} - {{ session('semester')->year + 1 }}

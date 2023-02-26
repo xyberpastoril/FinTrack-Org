@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use ESolution\DBEncryption\Traits\EncryptedAttribute;
 
-class Fee extends Model
+class Item extends Model
 {
     use HasFactory, EncryptedAttribute;
 
@@ -29,6 +29,4 @@ class Fee extends Model
     {
         return $this->belongsTo(Semester::class);
     }
-
-
 }

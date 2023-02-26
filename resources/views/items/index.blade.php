@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Semestral Fees') }}</div>
+                <div class="card-header">{{ __('Semestral Items') }}</div>
 
                 <div class="card-body">
                     <!-- Button trigger modal -->
@@ -23,15 +23,15 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($fees as $fee)
+                            @foreach ($items as $item)
                             <tr>
-                                <th scope="row">{{ $fee->id }}</th>
-                                <td>{{ $fee->name }}</td>
-                                <td class="text-end">{{ number_format($fee->amount, 2) }}</td>
+                                <th scope="row">{{ $item->id }}</th>
+                                <td>{{ $item->name }}</td>
+                                <td class="text-end">{{ number_format($item->amount, 2) }}</td>
                                 <td>
-                                    <a href="{{ route('fees.edit', $fee->id) }}"
+                                    <a href="{{ route('items.edit', $item->id) }}"
                                         class="btn btn-sm btn-secondary">Edit</a>
-                                    {{-- <form action="{{ route('fees.destroy', $fee->id) }}" method="post"
+                                    {{-- <form action="{{ route('items.destroy', $item->id) }}" method="post"
                                         style="display: inline-block">
                                         @csrf
                                         @method('DELETE')
@@ -54,11 +54,11 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="createModalLabel">Create Fee</h5>
+                <h5 class="modal-title" id="createModalLabel">Create Item</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="create" action="{{ route('fees.store') }}" method="post">
+                <form id="create" action="{{ route('items.store') }}" method="post">
                     @csrf
                     <div class="mb-3">
                         <label for="name" class="form-label">Name</label>

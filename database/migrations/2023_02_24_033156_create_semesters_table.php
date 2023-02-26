@@ -15,14 +15,14 @@ return new class extends Migration
         Schema::create('semesters', function (Blueprint $table) {
             $table->id();
             $table->year('year');
-            $table->enum('semester', ['1', '2']);
+            $table->tinyInteger('semester');
             $table->timestamps();
         });
 
         // Create a semester for the current year and semester.
         DB::table('semesters')->insert([
             'year' => now()->year,
-            'semester' => now()->month > 7 ? '1' : '2',
+            'semester' => now()->month > 7 ? 1 : 2,
             'created_at' => now(),
             'updated_at' => now(),
         ]);

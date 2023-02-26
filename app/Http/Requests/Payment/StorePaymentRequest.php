@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Fee;
+namespace App\Http\Requests\Payment;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class StoreFeeRequest extends FormRequest
+class StorePaymentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,8 +23,17 @@ class StoreFeeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
-            'amount' => ['required', 'numeric', 'min:0'],
+            'enrolled_student_id' => ['required'],
+            'date' => ['required', 'date'],
+            'transaction_items' => ['required', 'array'],
         ];
+    }
+
+    // preprocess data
+    public function prepareForValidation(): void
+    {
+        $this->merge([
+            'transaction_items' => json_decode($this->transaction_items),
+        ]);
     }
 }
