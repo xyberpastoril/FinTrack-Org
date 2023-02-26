@@ -75,6 +75,7 @@ class AttendanceEventLogController extends Controller
         $log = $attendance->logs()->updateOrCreate([
             'enrolled_student_id' => $request->student->id,
             'status' => $attendance->status,
+        ], [
             'logged_by_user_id' => Auth::id(),
         ]);
 
