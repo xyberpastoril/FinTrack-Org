@@ -11,6 +11,7 @@ use App\Models\AttendanceEventLog;
 use App\Models\EnrolledStudent;
 use App\Models\Fee;
 use App\Models\Transaction;
+use ESolution\DBEncryption\Encrypter;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -56,9 +57,9 @@ class EnrolledStudentController extends Controller
             ->get();
 
         $students = $students->map(function($student) {
+            // decrypt degree program abbr
+            $student->degree_program = Encrypter::decrypt($student->degree_program);
             $student->label = $student->last_name . ', ' . $student->first_name . ' ' . $student->middle_name . ' - ' . $student->degree_program . ' ' . $student->year_level;
-
-
             return $student;
         });
 

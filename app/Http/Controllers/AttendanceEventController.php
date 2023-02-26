@@ -8,6 +8,7 @@ use App\Http\Requests\AttendanceEvent\StoreAttendanceEventRequest;
 use App\Http\Requests\AttendanceEvent\UpdateAttendanceEventRequest;
 use App\Models\Event;
 use App\Models\Student;
+use ESolution\DBEncryption\Encrypter;
 use Illuminate\Support\Facades\DB;
 
 class AttendanceEventController extends Controller
@@ -56,6 +57,12 @@ class AttendanceEventController extends Controller
                     ->where('timeout_events.attendance_event_id', '=', $attendance->id);
             })
             ->get();
+
+        $logs = $logs->map(function($log) {
+            // decrypt degree program abbr
+            $log->abbr = Encrypter::decrypt($log->abbr);
+            return $log;
+        });
 
         return view('events.attendances.show', [
             'event' => $event,
