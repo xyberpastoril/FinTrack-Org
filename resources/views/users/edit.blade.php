@@ -16,8 +16,12 @@
                             <input type="text" class="form-control" id="name" name="name" required value="{{ $user->name }}">
                         </div>
                         <div class="mb-3">
-                            <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="email" name="email" required value="{{ $user->email }}">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="username" class="form-control" id="username" name="username" required value="{{ $user->username }}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="position" class="form-label">Position</label>
+                            <input type="text" class="form-control" id="position" name="position" required value="{{ $user->position }}">
                         </div>
                         <div class="mb-3">
                             <label for="is_admin" class="form-label">Role</label>

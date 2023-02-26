@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
+use ESolution\DBEncryption\Encrypter;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -20,6 +23,28 @@ class LoginController extends Controller
     */
 
     use AuthenticatesUsers;
+
+    public function username()
+    {
+        return 'username';
+    }
+
+    // attemptlogin but for encrypted username
+    protected function attemptLogin(Request $request)
+    {
+        $username = $request->username;
+        $password = $request->password;
+
+        // encrypt username using the same method as in User model
+        $username = Encrypter::encrypt($username);
+
+        return $this->guard()->attempt([
+                'username' => $username,
+                'password' => $password
+            ],
+            $request->filled('remember')
+        );
+    }
 
     /**
      * Where to redirect users after login.
