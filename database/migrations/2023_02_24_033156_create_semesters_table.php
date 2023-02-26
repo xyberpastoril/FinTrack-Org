@@ -21,7 +21,7 @@ return new class extends Migration
 
         // Create a semester for the current year and semester.
         DB::table('semesters')->insert([
-            'year' => now()->year,
+            'year' => now()->month > 7 ? now()->year : now()->year - 1,
             'semester' => now()->month > 7 ? 1 : 2,
             'created_at' => now(),
             'updated_at' => now(),
