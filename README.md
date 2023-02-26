@@ -52,17 +52,12 @@ php artisan serve
 
 ### Importing Data
 
-Create a `.csv` file containing the degree programs' data. Its columns are as follows: `name`, and `abbr`.
-Example:
-| name         | abbr     |
-|--------------|-----------|
-| Bachelor of Science in Computer Science | BSCS     |
+Create a `.csv` file containing the students' data. Its columns are also as follows: `id_number`, `last_name`, `first_name`, `middle_name`, **`degree_program`**, `year_level`. We recommend that the `degree_program` shall contain its abbreviation, as seen below.
+| id_number       | last_name     | first_name       | middle_name     | degree_program      | year_level
+|--------------|-----------|-----------|-----------|-----------|----------|
+| 12-3-45678 | Dela Cruz     | Juan | Alejandro | **BSCS** | 4 |
 
-Create a `.csv` file containing the students' data. Its columns are also as follows: `id_number`, `last_name`, `first_name`, **`degree_program_id`**, `year_level`. The `degree_program_id` is an index starting from `1` based on the `.csv` file created from earlier.
-For example, the **`BSCS`** entry we created earlier is index **`1`**. Hence,
-| id_number       | last_name     | first_name       | degree_program_id      | year_level
-|--------------|-----------|-----------|-----------|-----------|
-| 12-3-45678 | Pastoril     | Xyber | **1** | 4 |
+The system will automatically check whether the student exists, then add if not in the list. The same applies for degree programs.
 
 ### QR Scanning
 The QR Scanning functionality requires `https`. It is possible to enable using ngrok, but you may need to add a temporary line at the end of `routes/web.php`:
