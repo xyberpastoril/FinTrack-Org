@@ -20,9 +20,10 @@ class StudentsImport implements ToModel, WithHeadingRow
 
         if(!$student) {
             $student = Student::create([
-                'id_number' => $row['id_number'],
-                'last_name' => $row['last_name'],
-                'first_name' => $row['first_name'],
+                'id_number' => $row['id_number'] ? $row['id_number'] : "",
+                'last_name' => $row['last_name'] ? $row['last_name'] : "",
+                'first_name' => $row['first_name'] ? $row['first_name'] : "",
+                'middle_name' => $row['middle_name'] ? $row['middle_name'] : null,
             ]);
         }
 

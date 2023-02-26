@@ -88,6 +88,7 @@
                                         <th scope="col">#</th>
                                         <th scope="col">Last Name</th>
                                         <th scope="col">First Name</th>
+                                        <th scope="col">Middle Name</th>
                                         <th scope="col">Degree Program</th>
                                         <th scope="col">Year Level</th>
                                         <th scope="col">Actions</th>
@@ -106,6 +107,7 @@
                                         <th scope="col">ID Number</th>
                                         <th scope="col">Last Name</th>
                                         <th scope="col">First Name</th>
+                                        <th scope="col">Middle Name</th>
                                         <th scope="col">Degree Program</th>
                                         <th scope="col">Year Level</th>
                                         <th scope="col">Actions</th>
@@ -227,7 +229,7 @@
 
                     // $("#latestName").html("<span class='text-success'>" + response.user.lastName + ', ' + response.user.firstName + ' ' + (response.user.middleName ? response.user.middleName[0] + '.' : "") + "</span>");
                     $("#latest_scan_name").html(
-                        `<span class='text-success'>${student.last_name}, ${student.first_name}</span>`
+                        `<span class='text-success'>${student.last_name}, ${student.first_name} ${student.middle_name ? student.middle_name : ""}</span>`
                         );
                     $("#latest_scan_id_number").text(student.id_number);
                     $("#latest_scan_degree_program").text(enrolled_student.degree_program.abbr);
@@ -248,6 +250,7 @@
                             <td>${student.id_number}</td>
                             <td>${student.last_name}</td>
                             <td>${student.first_name}</td>
+                            <td>${student.middle_name ? student.middle_name : ""}</td>
                             <td>${enrolled_student.degree_program.abbr}</td>
                             <td>${enrolled_student.year_level}</td>
                             <td>${log.status}</td>
@@ -359,6 +362,7 @@
                         <th scope="row">${student.id}</th>
                         <td>${student.last_name}</td>
                         <td>${student.first_name}</td>
+                        <td>${student.middle_name ? student.middle_name : ""}</td>
                         <td>${student.abbr}</td>
                         <td>${student.year_level}</td>
                         <td>
@@ -429,6 +433,7 @@
                         <th scope="row">${student.id}</th>
                         <td>${student.last_name}</td>
                         <td>${student.first_name}</td>
+                        <td>${student.middle_name ? student.middle_name : ""}</td>
                         <td>${student.abbr}</td>
                         <td>${student.year_level}</td>
                         <td>

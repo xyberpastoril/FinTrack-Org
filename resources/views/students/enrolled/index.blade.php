@@ -20,6 +20,7 @@
                                 <th scope="col">ID Number</th>
                                 <th scope="col">Last Name</th>
                                 <th scope="col">First Name</th>
+                                <th scope="col">Middle Name</th>
                                 <th scope="col">Degree Program</th>
                                 <th scope="col">Year Level</th>
                                 <th scope="col">Actions</th>
@@ -32,6 +33,7 @@
                                 <td>{{ $student->student->id_number }}</td>
                                 <td>{{ $student->student->last_name }}</td>
                                 <td>{{ $student->student->first_name }}</td>
+                                <td>{{ $student->student->middle_name }}</td>
                                 <td>{{ $student->degreeProgram->abbr }}</td>
                                 <td>{{ $student->year_level }}</td>
                                 <td>

@@ -19,6 +19,7 @@ class AttendanceEventController extends Controller
                 'students.id_number',
                 'students.first_name',
                 'students.last_name',
+                'students.middle_name',
                 'enrolled_students.year_level',
                 'degree_programs.abbr',
                 DB::raw('IF(timein_events.id IS NOT NULL, "1", "0") as time_in'),

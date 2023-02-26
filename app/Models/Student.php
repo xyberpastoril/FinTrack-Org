@@ -19,6 +19,7 @@ class Student extends Model
         'id_number',
         'last_name',
         'first_name',
+        'middle_name',
     ];
 
     /**
@@ -30,6 +31,7 @@ class Student extends Model
         'id_number',
         'last_name',
         'first_name',
+        'middle_name',
     ];
 
     public function enrolledSemesters()
@@ -39,6 +41,6 @@ class Student extends Model
 
     public function getName()
     {
-        return $this->last_name . ', ' . $this->first_name;
+        return $this->last_name . ', ' . $this->first_name . ' ' . $this->middle_name;
     }
 }

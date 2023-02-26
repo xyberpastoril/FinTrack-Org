@@ -38,6 +38,7 @@ class EnrolledStudentController extends Controller
                 'students.id_number',
                 'students.first_name',
                 'students.last_name',
+                'students.middle_name',
                 'degree_programs.abbr as degree_program',
                 'enrolled_students.year_level',
             )
@@ -50,11 +51,14 @@ class EnrolledStudentController extends Controller
             ->leftJoin('degree_programs', 'enrolled_students.degree_program_id', '=', 'degree_programs.id')
             ->whereEncrypted('last_name', 'like', "%$query%")
             ->orWhereEncrypted('first_name', 'like', "%$query%")
+            ->orWhereEncrypted('middle_name', 'like', "%$query%")
             ->orWhereEncrypted('id_number', 'like', "%$query%")
             ->get();
 
         $students = $students->map(function($student) {
-            $student->label = $student->last_name . ', ' . $student->first_name . ' - ' . $student->degree_program . ' ' . $student->year_level;
+            $student->label = $student->last_name . ', ' . $student->first_name . ' ' . $student->middle_name . ' - ' . $student->degree_program . ' ' . $student->year_level;
+
+
             return $student;
         });
 
