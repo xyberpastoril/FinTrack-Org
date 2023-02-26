@@ -20,6 +20,10 @@
                             <input type="username" class="form-control" id="username" name="username" required value="{{ $user->username }}">
                         </div>
                         <div class="mb-3">
+                            <label for="position" class="form-label">Position</label>
+                            <input type="text" class="form-control" id="position" name="position" required value="{{ $user->position }}">
+                        </div>
+                        <div class="mb-3">
                             <label for="is_admin" class="form-label">Role</label>
                             <select class="form-select" id="is_admin" name="is_admin">
                                 <option value="0" @if(!$user->is_admin) selected @endif>User</option>
