@@ -2,6 +2,7 @@
 
 namespace App\Imports;
 
+use App\Models\DegreeProgram;
 use App\Models\EnrolledStudent;
 use App\Models\Student;
 use Maatwebsite\Excel\Concerns\ToModel;
@@ -27,13 +28,25 @@ class StudentsImport implements ToModel, WithHeadingRow
             ]);
         }
 
-        EnrolledStudent::firstOrCreate([
-            'student_id' => $student->id,
-            'semester_id' => session('semester')->id,
-        ], [
-            'degree_program_id' => $row['degree_program_id'],
-            'year_level' => $row['year_level'],
-        ]);
+        // check if degree program exists
+        if($row['degree_program']) {
+            $degreeProgram = DegreeProgram::whereEncrypted('abbr', $row['degree_program'])->first();
+
+            if(!$degreeProgram) {
+                $degreeProgram = DegreeProgram::create([
+                    'name' => $row['degree_program'],
+                    'abbr' => $row['degree_program'],
+                ]);
+            }
+
+            EnrolledStudent::firstOrCreate([
+                'student_id' => $student->id,
+                'semester_id' => session('semester')->id,
+            ], [
+                'degree_program_id' => $degreeProgram->id,
+                'year_level' => $row['year_level'],
+            ]);
+        }
 
         return null;
     }
