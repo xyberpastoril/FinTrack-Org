@@ -5,6 +5,7 @@ namespace App\Exports;
 use App\Models\AttendanceEvent;
 use App\Models\Event;
 use App\Models\Student;
+use ESolution\DBEncryption\Encrypter;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Facades\Excel;
@@ -30,10 +31,10 @@ class AttendanceEventLogExport implements FromCollection, WithHeadings
 
         $logs = Student::select(
             'students.id_number',
-            'students.first_name',
             'students.last_name',
-            'enrolled_students.year_level',
+            'students.first_name',
             'degree_programs.abbr',
+            'enrolled_students.year_level',
             DB::raw('IF(timein_events.id IS NOT NULL, "1", "0") as time_in'),
             DB::raw('IF(timeout_events.id IS NOT NULL, "1", "0") as time_out'),
         )
@@ -53,6 +54,12 @@ class AttendanceEventLogExport implements FromCollection, WithHeadings
                 ->where('timeout_events.attendance_event_id', '=', $attendance->id);
         })
         ->get();
+
+        $logs = $logs->map(function($log) {
+            // decrypt degree program abbr
+            $log->abbr = Encrypter::decrypt($log->abbr);
+            return $log;
+        });
 
         return $logs;
     }

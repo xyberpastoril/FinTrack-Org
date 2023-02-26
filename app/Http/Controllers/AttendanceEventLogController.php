@@ -10,6 +10,7 @@ use App\Http\Requests\AttendanceEventLog\StoreAttendanceEventLogRequest;
 use App\Models\AttendanceEvent;
 use App\Models\AttendanceEventLog;
 use App\Models\Student;
+use ESolution\DBEncryption\Encrypter;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
@@ -56,6 +57,12 @@ class AttendanceEventLogController extends Controller
             ->orWhereEncrypted('middle_name', 'like', "%$query%")
             ->limit(10)
             ->get();
+
+        $logs = $logs->map(function($log) {
+            // decrypt degree program abbr
+            $log->abbr = Encrypter::decrypt($log->abbr);
+            return $log;
+        });
 
         return response()->json([
             'students' => $logs,
