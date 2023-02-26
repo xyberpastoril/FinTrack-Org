@@ -87,9 +87,9 @@ Route::group([
             'prefix' => 'events',
             'as' => 'events.',
         ], function(){
-            Route::get('/', [App\Http\Controllers\EventController::class, 'index'])->name('index');
+            Route::get('/', [App\Http\Controllers\EventController::class, 'index'])->name('index')->middleware('admin');
             Route::post('/', [App\Http\Controllers\EventController::class, 'store'])->name('store')->middleware('admin');
-            Route::get('/{event}', [App\Http\Controllers\EventController::class, 'show'])->name('show');
+            Route::get('/{event}', [App\Http\Controllers\EventController::class, 'show'])->name('show')->middleware('admin');
             Route::get('/{event}/edit', [App\Http\Controllers\EventController::class, 'edit'])->name('edit')->middleware('admin');
             Route::put('/{event}', [App\Http\Controllers\EventController::class, 'update'])->name('update')->middleware('admin');
             Route::delete('/{event}', [App\Http\Controllers\EventController::class, 'destroy'])->name('destroy')->middleware('admin');
@@ -99,7 +99,7 @@ Route::group([
                 'as' => 'attendances.',
             ], function(){
                 Route::post('/', [App\Http\Controllers\AttendanceEventController::class, 'store'])->name('store')->middleware('admin');
-                Route::get('/{attendance}', [App\Http\Controllers\AttendanceEventController::class, 'show'])->name('show');
+                Route::get('/{attendance}', [App\Http\Controllers\AttendanceEventController::class, 'show'])->name('show')->middleware('admin');
                 Route::get('/{attendance}/scan', [App\Http\Controllers\AttendanceEventController::class, 'scan'])->name('scan');
                 Route::get('/{attendance}/edit', [App\Http\Controllers\AttendanceEventController::class, 'edit'])->name('edit')->middleware('admin');
                 Route::put('/{attendance}', [App\Http\Controllers\AttendanceEventController::class, 'update'])->name('update')->middleware('admin');
@@ -112,6 +112,14 @@ Route::group([
                     Route::post('/{attendance}/logs/export/', [App\Http\Controllers\AttendanceEventLogController::class, 'export'])->name('export');
                 });
             });
+        });
+
+        // Attendance Events
+        Route::group([
+            'prefix' => 'attendances',
+            'as' => 'attendances.',
+        ], function(){
+            Route::get('/active', [App\Http\Controllers\AttendanceEventController::class, 'index'])->name('index');
         });
 
         // Fees

@@ -101,7 +101,7 @@
 
                                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown1">
 
-                                        <a class="dropdown-item disabled" href="javascript:void(0)">{{ __('Attendance') }}</a>
+                                        <a class="dropdown-item" href="{{ route('attendances.index') }}">{{ __('Attendance') }}</a>
 
                                         <a class="dropdown-item" href="{{ route('payment.index') }}">{{ __('Payment') }}</a>
 
@@ -125,7 +125,7 @@
                                     </a>
 
                                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown1">
-                                        <a class="dropdown-item disabled" href="javascript:void(0)">{{ __('Attendance') }}</a>
+                                        <a class="dropdown-item" href="{{ route('attendances.index') }}">{{ __('Attendance') }}</a>
 
                                         <a class="dropdown-item disabled" href="javascript:void(0)">{{ __('Payment') }}</a>
                                     </div>

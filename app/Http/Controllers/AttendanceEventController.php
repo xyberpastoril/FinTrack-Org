@@ -12,6 +12,21 @@ use Illuminate\Support\Facades\DB;
 
 class AttendanceEventController extends Controller
 {
+    public function index()
+    {
+        $attendanceEvents = AttendanceEvent::select(
+                'attendance_events.*',
+                'events.name as event_name',
+                'events.id as event_id',
+            )
+            ->leftJoin('events', 'attendance_events.event_id', '=', 'events.id')
+            ->where('events.semester_id', '=', session('semester')->id)
+            ->where('attendance_events.status', '!=', 'closed')
+            ->get();
+
+        return view('attendances.index', compact('attendanceEvents'));
+    }
+
     public function show(Event $event, AttendanceEvent $attendance)
     {
         $logs = Student::select(
